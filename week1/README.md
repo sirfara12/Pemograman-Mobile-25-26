@@ -8,7 +8,7 @@ void main(){
     print('nama saya Sirfara, sekarang umur $i');
   }
 }
-![no1](img/no1.png)
+![no1](codelab26_dar/img/no1.png)
 
 3. Mengapa sangat penting untuk memahami bahasa pemrograman Dart sebelum kita menggunakan framework Flutter ? Jelaskan!
 jawab: Dasar dari flutter adalah dart, dengan memahami dart, lebih mudah membaca, menulis dan memodifikasi kode di flutter. Dart juga menggunakan OOP yang menjadi dasar logika dalam flutter.
@@ -20,7 +20,6 @@ Jawab: Dart merupakan bahasa inti di balik Flutter digunakan baik untuk aplikasi
 jawab: Null Safety adalah fitur Dart yang memastikan bahwa variabel tidak bisa berisi null kecuali memang diizinkan secara eksplisit. sedangkan late variabel igunakan untuk menunda inisialisasi variabel non-nullable. 
 contoh kode program null safety ada di file kode src.
 output:
-![gambar2](img/gambar2.png)
+![gambar2](codelab26_dar/img/gambar2.png) contoh kode program late variable ada di file kode src. output 
+![latevariable](codelab26_dar/img/latevariable.png)
 
-contoh kode program late variable ada di file kode src.
-output: ![latevariable](img/latevariabel.png)
