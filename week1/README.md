@@ -18,39 +18,12 @@ Jawab: Dart merupakan bahasa inti di balik Flutter digunakan baik untuk aplikasi
 
 5. Buatlah penjelasan dan contoh eksekusi kode tentang perbedaan Null Safety dan Late variabel !
 jawab: Null Safety adalah fitur Dart yang memastikan bahwa variabel tidak bisa berisi null kecuali memang diizinkan secara eksplisit. sedangkan late variabel igunakan untuk menunda inisialisasi variabel non-nullable. 
-contoh kode program null safety
-kode program
-void main() {
-  // Variabel non-nullable, harus langsung ada nilai
-  String nama = "Sirfara";
-  print("Nama: $nama");
-
-  // Variabel nullable, bisa null
-  String? alamat;
-  print("Alamat: $alamat"); // null
-
-  // Menggunakan operator ?? untuk default value
-  print("Alamat (default): ${alamat ?? 'Belum diisi'}");
-
-  // Mengisi nilai kemudian
-  alamat = "pasuruan";
-  print("Alamat setelah diisi: $alamat");
-}
-
+contoh kode program null safety ada di file kode src.
+output:
 [gambar2.png] ((codelab26_dart/img/gambar2.png))
 
-contoh kode program late variable
-kode program 
-void main() {
-  late String pesan; // Ditunda inisialisasinya
-
-  // Kalau langsung dipanggil -> ERROR runtime
-  // print(pesan);
-
-  // Baru diinisialisasi di sini
-  pesan = "Halo, ini menggunakan late!";
-  print("Pesan: $pesan");
-}
-
+contoh kode program late variable ada di file kode src.
+output:
 [latevariable.png](codelab26_dart/img/latevariable.png)
+
 
