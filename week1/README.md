@@ -20,6 +20,9 @@ Jawab: Dart merupakan bahasa inti di balik Flutter digunakan baik untuk aplikasi
 jawab: Null Safety adalah fitur Dart yang memastikan bahwa variabel tidak bisa berisi null kecuali memang diizinkan secara eksplisit. sedangkan late variabel igunakan untuk menunda inisialisasi variabel non-nullable. 
 contoh kode program null safety ada di file kode src.
 output:
-![gambar2](codelab26_dar/img/gambar2.png) contoh kode program late variable ada di file kode src. output 
+![gambar2](codelab26_dar/img/gambar2.png)
+contoh kode program late variable ada di file kode src.
+output 
 ![latevariable](codelab26_dar/img/latevariable.png)
+
 
