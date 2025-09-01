@@ -14,9 +14,11 @@ void main(){
 jawab: Dasar dari flutter adalah dart, dengan memahami dart, lebih mudah membaca, menulis dan memodifikasi kode di flutter. Dart juga menggunakan OOP yang menjadi dasar logika dalam flutter.
 
 4. Rangkumlah materi dari codelab ini menjadi poin-poin penting yang dapat Anda gunakan untuk membantu proses pengembangan aplikasi mobile menggunakan framework Flutter.
-Jawab: Dart merupakan bahasa inti di balik Flutter digunakan baik untuk aplikasi pengguna, plugin dan pengelolaan dependensi. Dasar Dart sebagai bahasa flutter memahami Dart berarti memahami fondasi Flutter struktur kode, logika UI, dan pengelolaan state. kelebihan bahasa dart yaitu productive tooling, garbage collection type annotations, statically typed with type inference, portability.
+Jawab: Dart merupakan bahasa inti di balik Flutter digunakan baik untuk aplikasi pengguna, plugin dan pengelolaan dependensi. Dasar Dart sebagai bahasa flutter memahami Dart berarti memahami fondasi Flutter struktur kode, logika UI, dan pengelolaan state. kelebihan bahasa dart yaitu productive tooling, garbage collection type annotations, statically typed with type inference, portability. Kompilasi  Dart VM dan JavaScript, kode dart dieksekusi dilingkungan yang mendukung bahasa dart dan perlu memperhatikan fitur fitur seperti Runtime systems, Dart core libraries, Garbage collectors.
+eksekusi kode Dart dapat beroperasi dalam dua mode, kompilasi Just-In-Time (JIT) atau Kompilasi Ahead-Of-Time (AOT).
 
-5. Buatlah penjelasan dan contoh eksekusi kode tentang perbedaan Null Safety dan Late variabel !
+
+6. Buatlah penjelasan dan contoh eksekusi kode tentang perbedaan Null Safety dan Late variabel !
 jawab: Null Safety adalah fitur Dart yang memastikan bahwa variabel tidak bisa berisi null kecuali memang diizinkan secara eksplisit. sedangkan late variabel igunakan untuk menunda inisialisasi variabel non-nullable. 
 contoh kode program null safety ada di file kode src.
 output:
@@ -26,6 +28,7 @@ output:
 contoh kode program late variable ada di file kode src.
 output:
 ![latevariable](codelab26_dar/img/latevariable.png)
+
 
 
 
