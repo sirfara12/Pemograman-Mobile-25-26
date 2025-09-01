@@ -23,7 +23,7 @@ output:
 [gambar2.png] ((codelab26_dart/img/gambar2.png))
 
 contoh kode program late variable ada di file kode src.
-output:
-[latevariable.png](codelab26_dart/img/latevariable.png)
+output:[latevariable.png](codelab26_dart/img/latevariable.png)
+
 
 
