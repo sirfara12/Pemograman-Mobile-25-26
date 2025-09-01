@@ -21,8 +21,11 @@ jawab: Null Safety adalah fitur Dart yang memastikan bahwa variabel tidak bisa b
 contoh kode program null safety ada di file kode src.
 output:
 ![gambar2](codelab26_dar/img/gambar2.png)
+
+
 contoh kode program late variable ada di file kode src.
-output 
+output:
 ![latevariable](codelab26_dar/img/latevariable.png)
+
 
 
