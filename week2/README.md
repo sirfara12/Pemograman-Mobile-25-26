@@ -17,7 +17,7 @@ void main() {
 
   if (test == "test2") print("Test2 again");
 }
-
+```dart
 ### Langkah 2
 
 Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan!
@@ -35,7 +35,7 @@ String test = "true";
 if (test) {
    print("Kebenaran");
 }
-
+```dart
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki namun tetap menggunakan if/else.
 **Jawaban:**
 Terjadi Error karena tidak ada nilai dalam variabel if.
