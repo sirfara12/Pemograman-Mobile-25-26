@@ -73,7 +73,6 @@ do {
   counter++;
 } while (counter < 77);
 ```
-
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki namun tetap menggunakan do-while.
 **Jawaban:**
 Terjadi Error karena variabel counter belum dideklarasikan. memperbaikinya dengan mendeklarasikan
@@ -94,7 +93,7 @@ for (Index = 10; index < 27; index) {
 ### Langkah 2
 Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu
 perbaiki jika terjadi error.
-**Jawaban: **
+**Jawaban:**
 Terjadi eror karena tidak ada jenis variabel int yang dideklarasikan sebekum variabel index.
 
 ### Output Kode Perbaikan:
@@ -110,6 +109,7 @@ print(index);
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki namun tetap menggunakan for dan break-continue.
 **Jawaban:** 
 Terjadi eror dikarenakan variabel index belum didefinisikan.
+
 ### Output Kode Perbaikan:
 ![prak3langkah3](img/prak3langkah3.png)
 
@@ -120,6 +120,7 @@ Terjadi eror dikarenakan variabel index belum didefinisikan.
 **Jawaban**
 ### Output Program
 ![tugaspraktikum](img/tugas.png)
+
 Menampilkan bilangan prima dari 0 sampai 201. Setiap angka dicek menggunakan fungsi isPrima().
 Jika angka adalah bilangan prima, maka program mencetak angka tersebut beserta nama lengkap dan NIM.
 Hasil eksekusi menunjukkan bilangan prima berhasil ditampilkan sesuai instruksi tugas.
