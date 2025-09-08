@@ -17,7 +17,7 @@ void main() {
 
   if (test == "test2") print("Test2 again");
 }
-```dart
+
 ### Langkah 2
 
 Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan!
