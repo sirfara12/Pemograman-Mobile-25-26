@@ -17,7 +17,7 @@ void main() {
 
   if (test == "test2") print("Test2 again");
 }
-
+```
 ### Langkah 2
 
 Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan!
@@ -35,7 +35,7 @@ String test = "true";
 if (test) {
    print("Kebenaran");
 }
-
+```
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki namun tetap menggunakan if/else.
 **Jawaban:**
 Terjadi Error karena tidak ada nilai dalam variabel if.
@@ -52,7 +52,7 @@ while (counter < 33) {
   print(counter);
   counter++;
 }
-
+```
 ###Langkah 2
 Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu
 perbaiki jika terjadi error.
@@ -69,6 +69,8 @@ do {
   print(counter);
   counter++;
 } while (counter < 77);
+```
+
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki namun tetap menggunakan do-while.
 **Jawaban:**
 Terjadi Error karena variabel counter belum dideklarasikan. memperbaikinya dengan mendeklarasikan
@@ -84,7 +86,7 @@ Ketik atau salin kode program berikut ke dalam fungsi main().
 for (Index = 10; index < 27; index) {
   print(Index);
 }
-```dart
+```
 
 ###Langkah 2
 Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu
@@ -100,7 +102,7 @@ Tambahkan kode program berikut di dalam for-loop, lalu coba eksekusi (Run) kode 
 ```dart
 If (Index == 21) break;
 Else If (index > 1 || index < 7) continue;
-print(index); ```dart
+print(index); ```
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki namun tetap menggunakan for dan break-continue.
 **Jawaban:** 
 Terjadi eror dikarenakan variabel index belum didefinisikan.
