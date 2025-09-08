@@ -35,7 +35,7 @@ String test = "true";
 if (test) {
    print("Kebenaran");
 }
-```dart
+
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki namun tetap menggunakan if/else.
 **Jawaban:**
 Terjadi Error karena tidak ada nilai dalam variabel if.
@@ -54,7 +54,8 @@ while (counter < 33) {
 }
 
 ###Langkah 2
-Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu perbaiki jika terjadi error.
+Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu
+perbaiki jika terjadi error.
 **Jawaban:**
 Terjadi Error karena variabel counter belum dideklarasikan.
 
@@ -70,7 +71,8 @@ do {
 } while (counter < 77);
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki namun tetap menggunakan do-while.
 **Jawaban:**
-Terjadi Error karena variabel counter belum dideklarasikan. memperbaikinya dengan mendeklarasikan variabel counter sbeelumnya.
+Terjadi Error karena variabel counter belum dideklarasikan. memperbaikinya dengan mendeklarasikan
+variabel counter sbeelumnya.
 
 ### Output Kode Perbaikan: 
 ![prak2langkah3](img/prak2langkah3.png)
@@ -85,7 +87,8 @@ for (Index = 10; index < 27; index) {
 ```dart
 
 ###Langkah 2
-Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu perbaiki jika terjadi error.
+Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu
+perbaiki jika terjadi error.
 **Jawaban: **
 Terjadi eror karena tidak ada jenis variabel int yang dideklarasikan sebekum variabel index.
 
@@ -105,10 +108,13 @@ Terjadi eror dikarenakan variabel index belum didefinisikan.
 ![prak3langkah3](img/prak3langkah3.png)
 
 ###Tugas Praktikum
- Buatlah sebuah program yang dapat menampilkan bilangan prima dari angka 0 sampai 201 menggunakan Dart. Ketika bilangan prima ditemukan, maka tampilkan nama lengkap dan NIM Anda.
+ Buatlah sebuah program yang dapat menampilkan bilangan prima dari angka 0 sampai 201 menggunakan Dart.
+ Ketika bilangan prima ditemukan, maka tampilkan nama lengkap dan NIM Anda.
 
 **Jawaban**
 ###Output Program
 ![tugaspraktikum](img/tugas.png)
-Menampilkan bilangan prima dari 0 sampai 201. Setiap angka dicek menggunakan fungsi isPrima(). Jika angka adalah bilangan prima, maka program mencetak angka tersebut beserta nama lengkap dan NIM. Hasil eksekusi menunjukkan bilangan prima berhasil ditampilkan sesuai instruksi tugas.
+Menampilkan bilangan prima dari 0 sampai 201. Setiap angka dicek menggunakan fungsi isPrima().
+Jika angka adalah bilangan prima, maka program mencetak angka tersebut beserta nama lengkap dan NIM.
+Hasil eksekusi menunjukkan bilangan prima berhasil ditampilkan sesuai instruksi tugas.
 
