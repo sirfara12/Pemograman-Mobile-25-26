@@ -16,7 +16,7 @@ void main() {
   }
 
   if (test == "test2") print("Test2 again");
-}```dart
+}
 
 ### Langkah 2
 
