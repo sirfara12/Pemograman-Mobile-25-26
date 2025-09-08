@@ -34,7 +34,7 @@ Tambahkan kode program berikut, lalu coba eksekusi (Run) kode Anda.
 String test = "true";
 if (test) {
    print("Kebenaran");
-} ```dart
+}
 
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki namun tetap menggunakan if/else.
 **Jawaban:**
@@ -51,7 +51,7 @@ Ketik atau salin kode program berikut ke dalam fungsi `main()`:
 while (counter < 33) {
   print(counter);
   counter++;
-}```dart
+}
 
 ###Langkah 2
 Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu perbaiki jika terjadi error.
@@ -67,7 +67,7 @@ Tambahkan kode program berikut, lalu coba eksekusi (Run) kode Anda.
 do {
   print(counter);
   counter++;
-} while (counter < 77);```dart
+} while (counter < 77);
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki namun tetap menggunakan do-while.
 **Jawaban:**
 Terjadi Error karena variabel counter belum dideklarasikan. memperbaikinya dengan mendeklarasikan variabel counter sbeelumnya.
@@ -81,7 +81,8 @@ Ketik atau salin kode program berikut ke dalam fungsi main().
 ```dart
 for (Index = 10; index < 27; index) {
   print(Index);
-} ```dart
+}
+```dart
 
 ###Langkah 2
 Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu perbaiki jika terjadi error.
