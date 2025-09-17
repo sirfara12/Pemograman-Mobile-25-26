@@ -494,10 +494,10 @@ void main() {
 
 7. Jelaskan dengan contoh cara membuat return multiple value di Functions!
 **Jawaban:** 
-## Return Multiple Value di Functions (Dart)
+### Return Multiple Value di Functions (Dart)
 
 | Cara                        | Deskripsi                                      | Contoh Sintaks |
 |-----------------------------|------------------------------------------------|----------------|
-| **List / Map**              | Nilai dikembalikan dalam bentuk list atau map. | ```dart<br>List<Object> foo() => [42, "foobar"];<br>var result = foo();<br>print(result[0]); // 42<br>print(result[1]); // foobar``` |
-| **Class / Object**          | Membuat class sederhana untuk membungkus data. | ```dart<br>class Pair {<br>  final int a;<br>  final String b;<br>  Pair(this.a, this.b);<br>}<br>Pair foo() => Pair(42, "foobar");``` |
-| **Record (Dart 3)**         | Menggunakan fitur record, mirip tuple.         | ```dart<br>(int, String) foo() => (42, "foobar");<br>void main() {<br>  var (a, b) = foo();<br>  print('$a, $b');<br>}``` |
+| List / Map              | Nilai dikembalikan dalam bentuk list atau map. | ```dart<br>List<Object> foo() => [42, "foobar"];<br>var result = foo();<br>print(result[0]); // 42<br>print(result[1]); // foobar``` |
+| Class / Object          | Membuat class sederhana untuk membungkus data. | ```dart<br>class Pair {<br>  final int a;<br>  final String b;<br>  Pair(this.a, this.b);<br>}<br>Pair foo() => Pair(42, "foobar");``` |
+| Record (Dart 3)         | Menggunakan fitur record, mirip tuple.         | ```dart<br>(int, String) foo() => (42, "foobar");<br>void main() {<br>  var (a, b) = foo();<br>  print('$a, $b');<br>}``` |
