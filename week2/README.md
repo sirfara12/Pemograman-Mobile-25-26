@@ -16,8 +16,8 @@ void main() {
   }
 
   if (test == "test2") print("Test2 again");
-}```dart
-
+}
+```
 ### Langkah 2
 
 Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan!
@@ -28,14 +28,15 @@ Error muncul karena If dan Else dengan huruf besar.
 ![Praktikum 1 langkah 1](img/prak1langkah1.png)
 
 ### Langkah 3
+
 Tambahkan kode program berikut, lalu coba eksekusi (Run) kode Anda.
 
 ```dart
 String test = "true";
 if (test) {
    print("Kebenaran");
-} ```dart
-
+}
+```
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki namun tetap menggunakan if/else.
 **Jawaban:**
 Terjadi Error karena tidak ada nilai dalam variabel if.
@@ -45,69 +46,82 @@ Terjadi Error karena tidak ada nilai dalam variabel if.
 
 ## Praktikum 2 
 ### Langkah 1
+
 Ketik atau salin kode program berikut ke dalam fungsi `main()`:
 
 ```dart
 while (counter < 33) {
   print(counter);
   counter++;
-}```dart
+}
+```
+### Langkah 2
 
-###Langkah 2
-Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu perbaiki jika terjadi error.
+Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu
+perbaiki jika terjadi error.
 **Jawaban:**
 Terjadi Error karena variabel counter belum dideklarasikan.
 
 ### Output Kode Perbaikan:
 ![Praktikum 2 langkah 2](img/prak2langkah2.png)
 
-###Langkah 3
+### Langkah 3
 Tambahkan kode program berikut, lalu coba eksekusi (Run) kode Anda.
 ```dart
 do {
   print(counter);
   counter++;
-} while (counter < 77);```dart
+} while (counter < 77);
+```
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki namun tetap menggunakan do-while.
 **Jawaban:**
-Terjadi Error karena variabel counter belum dideklarasikan. memperbaikinya dengan mendeklarasikan variabel counter sbeelumnya.
+Terjadi Error karena variabel counter belum dideklarasikan. memperbaikinya dengan mendeklarasikan
+variabel counter sbeelumnya.
 
 ### Output Kode Perbaikan: 
 ![prak2langkah3](img/prak2langkah3.png)
 
-##Praktikum 3 
-###Langkah 1
+## Praktikum 3 
+### Langkah 1
 Ketik atau salin kode program berikut ke dalam fungsi main().
 ```dart
 for (Index = 10; index < 27; index) {
   print(Index);
-} ```dart
+}
+```
 
-###Langkah 2
-Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu perbaiki jika terjadi error.
-**Jawaban: **
+### Langkah 2
+Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu
+perbaiki jika terjadi error.
+**Jawaban:**
 Terjadi eror karena tidak ada jenis variabel int yang dideklarasikan sebekum variabel index.
 
 ### Output Kode Perbaikan:
 ![prak3langkah2](img/prak3langkah.png)
 
-###Langkah 3
+### Langkah 3
 Tambahkan kode program berikut di dalam for-loop, lalu coba eksekusi (Run) kode Anda.
 ```dart
 If (Index == 21) break;
 Else If (index > 1 || index < 7) continue;
-print(index); ```dart
+print(index);
+```
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki namun tetap menggunakan for dan break-continue.
 **Jawaban:** 
 Terjadi eror dikarenakan variabel index belum didefinisikan.
+
 ### Output Kode Perbaikan:
 ![prak3langkah3](img/prak3langkah3.png)
 
-###Tugas Praktikum
- Buatlah sebuah program yang dapat menampilkan bilangan prima dari angka 0 sampai 201 menggunakan Dart. Ketika bilangan prima ditemukan, maka tampilkan nama lengkap dan NIM Anda.
+### Tugas Praktikum
+ Buatlah sebuah program yang dapat menampilkan bilangan prima dari angka 0 sampai 201 menggunakan Dart.
+ Ketika bilangan prima ditemukan, maka tampilkan nama lengkap dan NIM Anda.
 
 **Jawaban**
-###Output Program
+### Output Program
 ![tugaspraktikum](img/tugas.png)
-Menampilkan bilangan prima dari 0 sampai 201. Setiap angka dicek menggunakan fungsi isPrima(). Jika angka adalah bilangan prima, maka program mencetak angka tersebut beserta nama lengkap dan NIM. Hasil eksekusi menunjukkan bilangan prima berhasil ditampilkan sesuai instruksi tugas.
+
+Menampilkan bilangan prima dari 0 sampai 201. Setiap angka dicek menggunakan fungsi isPrima().
+Jika angka adalah bilangan prima, maka program mencetak angka tersebut beserta nama lengkap dan NIM.
+Hasil eksekusi menunjukkan bilangan prima berhasil ditampilkan sesuai instruksi tugas.
 
