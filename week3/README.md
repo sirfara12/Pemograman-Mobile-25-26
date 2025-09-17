@@ -14,7 +14,8 @@ print(list[1]);
 list[1] = 1;
 assert(list[1] == 1);
 print(list[1]);
-} ```dart
+}
+```
 
 ### Langkah 2
 Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan!<br> 
@@ -48,7 +49,8 @@ myList[1] = "Sirfara";
 myList[2] = "2341720072";
 
 print(myList);
-} ```
+}
+```
 
 ### Output Kode:
 ![prak1langkah3](img/prak1l3.png)
@@ -60,7 +62,8 @@ Ketik atau salin kode program berikut ke dalam fungsi main().
 void main() {
   var halogens = {'fluorine', 'chlorine', 'bromine', 'iodine', 'astatine'};
   print(halogens);
-} ```
+}
+```
 
 ### Langkah 2
 Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu perbaiki jika terjadi error. <br>
@@ -79,7 +82,8 @@ var names3 = {}; // Creates a map, not a set.
 
 print(names1);
 print(names2);
-print(names3);```
+print(names3);
+```
 
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki namun tetap menggunakan ketiga variabel tersebut. Tambahkan elemen nama dan NIM Anda pada kedua variabel Set tersebut dengan dua fungsi berbeda yaitu .add() dan .addAll(). Untuk variabel Map dihapus, nanti kita coba di praktikum selanjutnya.
 
@@ -96,7 +100,8 @@ void main() {
   Set<String> names2 = {};
   names2.addAll({"Sirfara", "2341720072"});
   print(names2);
-} ```
+}
+```
 ### Output kode:
 ![prak2langkah3](img/prak2l3.png)
 
@@ -118,7 +123,8 @@ var nobleGases = {
 };
 
 print(gifts);
-print(nobleGases);```
+print(nobleGases);
+```
 
 ### Langkah 2
 Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu perbaiki jika terjadi error.
@@ -139,7 +145,8 @@ var nobleGases = {
 
 print(gifts);
 print(nobleGases);
-}```
+}
+```
 ### Output:
 ![prak3langkah1](img/prak3l1.png)
 Kode Map yang berisi pasangan key value, variabel gifts menggunkana key bertipe string dengan value string dan int, noblegases menggunkan key bertipe int dengan variabel string dan int.
@@ -155,7 +162,8 @@ gifts['fifth'] = 'golden rings';
 var mhs2 = Map<int, String>();
 nobleGases[2] = 'helium';
 nobleGases[10] = 'neon';
-nobleGases[18] = 'argon';```
+nobleGases[18] = 'argon';
+```
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki. <br>
 **Jawaban:*
 Output program sama dengan langkah 1 karena tidak ada tambahan print.<br>
@@ -201,7 +209,8 @@ void main() {
     print(nobleGases);
     print(mhs1);
     print(mhs2);
-}```
+}
+```
 ### Output Kode:
 ![prak3langkah3](img/prak3l3.png)
 
@@ -214,7 +223,8 @@ var list = [1, 2, 3];
 var list2 = [0, ...list];
 print(list1);
 print(list2);
-print(list2.length);```
+print(list2.length);
+```
 
 ### Langkah 2
 Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu perbaiki jika terjadi error. <br>
@@ -228,7 +238,8 @@ void main() {
   print(list);
   print(list2);
   print(list2.length);
-}```
+}
+```
 
 ### Output:
 ![prak4langkah1](img/prak4l1.png)
@@ -239,7 +250,8 @@ Tambahkan kode program berikut, lalu coba eksekusi (Run) kode Anda.
 list1 = [1, 2, null];
 print(list1);
 var list3 = [0, ...?list1];
-print(list3.length);```
+print(list3.length);
+```
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki. <br>
 **Jawaban:** Tidak ada eror, karena list1 berisi null sebagai salah satu elemennya.
 
@@ -251,7 +263,8 @@ Tambahkan variabel list berisi NIM Anda menggunakan Spread Operators. Dokumentas
 var nim = ['2341720072'];
   var listNIM = [...list, ...nim];
   print(listNIM);
-  print(listNIM.length);```
+  print(listNIM.length);
+```
 
 ### Output :
 ![prak4langkah3](img/prak3l3.1.png)
@@ -260,7 +273,8 @@ var nim = ['2341720072'];
 Tambahkan kode program berikut, lalu coba eksekusi (Run) kode Anda.
 ```dart
 var nav = ['Home', 'Furniture', 'Plants', if (promoActive) 'Outlet'];
-print(nav);```
+print(nav);
+```
 
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki. Tunjukkan hasilnya jika variabel promoActive ketika true dan false. <br>
 **Jawaban:** Terjadi eror karena promoActive belum didefinisikan.
@@ -287,7 +301,8 @@ void main() {
   var promoActive = true;
   var nav = ['Home', 'Furniture', 'Plants', if (promoActive) 'Outlet'];
   print(nav);
-}```
+}
+```
 
 ### Output kode jika True:
 ![prak4langkah4](img/p3l4T.png)
@@ -298,7 +313,8 @@ void main() {
 Tambahkan kode program berikut, lalu coba eksekusi (Run) kode Anda.
 ```dart
 var nav2 = ['Home', 'Furniture', 'Plants', if (login case 'Manager') 'Inventory'];
-print(nav2);```
+print(nav2);
+```
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki. Tunjukkan hasilnya jika variabel login mempunyai kondisi lain. <br>
 
 **Jawaban:** Terdapat eror dikarenakan variabel login blum didefinisikan dan sintaks case hanya bisa digunakan dalam switch case bukan di dalam list comprehension.
@@ -312,7 +328,8 @@ Tambahkan kode program berikut, lalu coba eksekusi (Run) kode Anda.
 var listOfInts = [1, 2, 3];
 var listOfStrings = ['#0', for (var i in listOfInts) '#$i'];
 assert(listOfStrings[1] == '#1');
-print(listOfStrings);```
+print(listOfStrings);
+```
 
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki. Jelaskan manfaat Collection For dan dokumentasikan hasilnya. <br>
 **Jawaban:** Tidak terjadi eror. Manfaat Collection for Membuat kode lebih ringkas dan mudah dibaca, Memudahkan membuat list dinamis dari data lain, Bisa dikombinasikan dengan if untuk seleksi kondisi,Efisien karena tidak perlu loop terpisah dan .add() manual.
@@ -323,7 +340,8 @@ Apa yang terjadi ? Jika terjadi error, silakan perbaiki. Jelaskan manfaat Collec
 Ketik atau salin kode program berikut ke dalam fungsi main().
 ```dart
 var record = ('first', a: 2, b: true, 'last');
-print(record)```
+print(record)
+```
 
 ### Langkah 2
 Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan! Lalu perbaiki jika terjadi error. <br>
@@ -336,7 +354,8 @@ Tambahkan kode program berikut di luar scope void main(), lalu coba eksekusi (Ru
 (int, int) tukar((int, int) record) {
   var (a, b) = record;
   return (b, a);
-}```
+}
+```
 
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki. Gunakan fungsi tukar() di dalam main() sehingga tampak jelas proses pertukaran value field di dalam Records. <br>
 **Jawaban:** Fungsi tukar menerima record, lalu membalik urutannya.
@@ -352,7 +371,8 @@ void main() {
 
   var hasil = tukar(angka);
   print('Sesudah tukar: $hasil');
-}```
+}
+```
 
 ### Output :
 [prak5langkah3](img/p5l3.png)
@@ -362,7 +382,8 @@ Tambahkan kode program berikut di dalam scope void main(), lalu coba eksekusi (R
 ```dart
 // Record type annotation in a variable declaration:
 (String, int) mahasiswa;
-print(mahasiswa);```
+print(mahasiswa);
+```
 
 Apa yang terjadi ? Jika terjadi error, silakan perbaiki. Inisialisasi field nama dan NIM Anda pada variabel record mahasiswa di atas. Dokumentasikan hasilnya dan buat laporannya! <br>
 **Jawaban:** Terjadi erro dikarenakan variabel mahasiswa belum diinisialisasikan.
@@ -382,7 +403,8 @@ void main() {
 
   (String, int) mahasiswa = ('Sirfaratih', 2341720072);
   print(mahasiswa);
-}```
+}
+```
 
 ### Output:
 [prak5langkah4](img/p5l4.png)
@@ -402,7 +424,7 @@ print(mahasiswa2.$2); // Prints 'last'
 ### Output:
 [prak5langkah5](img/p5l5.png)
 
-## 7 TUGAS PRAKTIKUM
+## TUGAS PRAKTIKUM
 1. Silakan selesaikan Praktikum 1 sampai 5, lalu dokumentasikan berupa screenshot hasil pekerjaan Anda beserta penjelasannya!
 
 2. Jelaskan yang dimaksud Functions dalam bahasa Dart!
@@ -422,8 +444,16 @@ print(mahasiswa2.$2); // Prints 'last'
  
 4. Jelaskan maksud Functions sebagai first-class objects beserta contoh sintaknya!
 **Jawaban:** 
+Functions adalah first-class objects di Dart, artinya function bisa disimpan di variabel, dijadikan parameter, atau dikembalikan dari function lain.
+```dart
+void greet(String name) => print('Hello $name');
 
-5. Apa itu Anonymous Functions? Jelaskan dan berikan contohnya!
+void main() {
+  var sayHello = greet; // function disimpan ke variabel
+  sayHello('Budi');     // output: Hello Budi
+}
+```
+6. Apa itu Anonymous Functions? Jelaskan dan berikan contohnya!
 **Jawaban:** 
 Anonymous function (fungsi anonim) adalah fungsi yang tidak mempunyai nama, biasanya didefinisikan inline, sering digunakan sekali, atau sebagai argumen ke fungsi lain.
 ```dart void main() {
@@ -437,7 +467,8 @@ Anonymous function (fungsi anonim) adalah fungsi yang tidak mempunyai nama, bias
   // dengan arrow syntax
   var squares = nums.map((n) => n * n);
   print(squares.toList()); // [1,4,9]
-}```
+}
+```
 
 6. Jelaskan perbedaan Lexical scope dan Lexical closures! Berikan contohnya!
 **Jawaban:** 
@@ -458,7 +489,8 @@ void main() {
   print(myCounter()); // 1
   print(myCounter()); // 2
   print(myCounter()); // 3
-}```
+}
+```
 
 7. Jelaskan dengan contoh cara membuat return multiple value di Functions!
 **Jawaban:** 
