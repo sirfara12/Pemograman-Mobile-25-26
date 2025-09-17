@@ -14,7 +14,7 @@ print(list[1]);
 list[1] = 1;
 assert(list[1] == 1);
 print(list[1]);
-} ```
+} ```dart
 
 ### Langkah 2
 Silakan coba eksekusi (Run) kode pada langkah 1 tersebut. Apa yang terjadi? Jelaskan!<br> 
