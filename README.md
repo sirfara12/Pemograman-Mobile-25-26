@@ -12,4 +12,4 @@ Mata Kuliah Pemograman Mobile // Semester 5
 | 2    | wekk 3                    | [Tugas Week 3](https://github.com/sirfara12/Pemograman-Mobile-25-26/tree/929a3d6bf2dea081d14bfe7755ee1ff254b20595/week2) |
 | 3    | week 4                    | [Tugas Week 4](https://github.com/sirfara12/Pemograman-Mobile-25-26/tree/929a3d6bf2dea081d14bfe7755ee1ff254b20595/week3) |
 | 4    | week 5                    | [Tugas Week 5](https://github.com/sirfara12/pemogramanmobile.git) |
-| 5    | AplikasiFlutter week5     | [Tugas Week 5]( ) |
+| 5    | AplikasiFlutter week5     | [Tugas Week 5](https://github.com/sirfara12/Pemograman-Mobile-25-26/tree/6b98bbe9c2f5c11815e032382d2de13d6b7e4694/week5apkflutter/aplikasiflutter) |
