@@ -251,4 +251,454 @@ body: Coolumn(
 ![tugas2](img/10.png)
 
 ## Praktikum 5: Membangun Navigasi di Flutter
+![praktikum5](img/gif1.gif)
 
+## Tugas Praktikum 2
+1. Untuk melakukan pengiriman data ke halaman berikutnya, cukup menambahkan informasi arguments pada penggunaan Navigator. Perbarui kode pada bagian Navigator menjadi seperti berikut. 
+```dart 
+Navigator.pushNamed(context, '/item', arguments: item);
+```
+
+### kode program 
+```dart 
+import 'package:flutter/material.dart';
+import 'package:belanja/models/item.dart';
+import 'package:belanja/pages/item_page.dart';
+
+class HomePage extends StatelessWidget {
+  final List<Item> items = [
+    Item('Sugar', 5000),
+    Item('Salt', 2000),
+  ];
+
+  HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: const Text(
+          'Shopping List',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      body: ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          final item = items[index];
+          return InkWell( 
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ItemPage(item: item),
+                ),
+              );
+            },
+            child: Card(
+              child: ListTile(
+                title: Text(item.name),
+                trailing: Text(item.price.toString()),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+```
+### Output
+![praktikum5](img/gif1.gif)
+
+2. Pembacaan nilai yang dikirimkan pada halaman sebelumnya dapat dilakukan menggunakan ModalRoute. Tambahkan kode berikut pada blok fungsi build dalam halaman ItemPage. Setelah nilai didapatkan, anda dapat menggunakannya seperti penggunaan variabel pada umumnya. (https://docs.flutter.dev/cookbook/navigation/navigate-with-arguments)
+```dart
+final itemArgs = ModalRoute.of(context)!.settings.arguments as Item;
+```
+### Output
+![praktikum5](img/gif1.gif)
+
+3. Pada hasil akhir dari aplikasi belanja yang telah anda selesaikan, tambahkan atribut foto produk, stok, dan rating. Ubahlah tampilan menjadi GridView seperti di aplikasi marketplace pada umumnya.
+#### class main.dart
+```dart
+import 'package:flutter/material.dart';
+import 'package:belanja/pages/home_page.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Belanja App',
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.blue,
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          iconTheme: IconThemeData(color: Colors.white), 
+        ),
+      ),
+      home: HomePage(),
+    );
+  }
+}
+```
+
+#### class item_page.dart
+```dart
+import 'package:flutter/material.dart';
+import 'package:belanja/models/item.dart';
+
+class ItemPage extends StatelessWidget {
+  final Item item;
+
+  const ItemPage({super.key, required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Text(item.name),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Image.asset(
+              item.imagePath,
+              height: 200,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+            const SizedBox(height: 20),
+            Text(
+              item.name,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            Text("Rp ${item.price}"),
+            const SizedBox(height: 10),
+            Text(item.description),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+#### clas home_page.dart
+```dart
+import 'package:flutter/material.dart';
+import 'package:belanja/models/item.dart';
+import 'package:belanja/pages/item_page.dart';
+
+class HomePage extends StatelessWidget {
+  final List<Item> items = [
+    Item('Beras', 12000, 'assets/image/beras.jpeg', 'Beras premium kualitas terbaik'),
+    Item('Gula', 5000, 'assets/image/gula.jpg', 'Gula manis alami'),
+    Item('Minyak', 14000, 'assets/image/minyak.jpg', 'Minyak goreng 1 liter'),
+    Item('Telur', 22000, 'assets/image/telur.jpeg', 'Telur ayam kampung segar'),
+  ];
+
+  HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: const Text(
+          'Shopping List',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+      body: GridView.builder(
+        padding: const EdgeInsets.all(10),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,          
+          crossAxisSpacing: 10,       
+          mainAxisSpacing: 10,        
+          childAspectRatio: 3 / 4,   
+        ),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          final item = items[index];
+          return InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ItemPage(item: item)),
+              );
+            },
+            child: Card(
+              elevation: 4,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Image.asset(
+                      item.imagePath,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text(item.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                        Text("Rp ${item.price}"),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+```
+
+#### class item.dart
+```dart
+class Item {
+  final String name;
+  final int price;
+  final String imagePath;
+  final String description;
+
+  Item(this.name, this.price, this.imagePath, this.description);
+}
+```
+### Output program 
+![tugas praktikum2](img/gif2.gif)
+
+
+4. Silakan implementasikan Hero widget pada aplikasi belanja Anda dengan mempelajari dari sumber ini: https://docs.flutter.dev/cookbook/navigation/hero-animations
+
+#### kode clas item.dart
+```dart
+class Item {
+  final String name;
+  final int price;
+  final String imageUrl;
+  final String description;
+
+  Item(this.name, this.price, this.imageUrl, this.description);
+}
+```
+#### kode class home_page.dart
+```dart
+import 'package:flutter/material.dart';
+import 'package:belanja/models/item.dart';
+import 'package:belanja/pages/item_page.dart';
+
+class HomePage extends StatelessWidget {
+  final List<Item> items = [
+    Item('Beras', 12000, 'assets/image/beras.jpeg', 'Beras premium kualitas terbaik'),
+    Item('Gula', 5000, 'assets/image/gula.jpg', 'Gula manis alami'),
+    Item('Minyak', 14000, 'assets/image/minyak.jpg', 'Minyak goreng 1 liter'),
+    Item('Telur', 22000, 'assets/image/telur.jpeg', 'Telur ayam kampung segar'),
+  ];
+
+  HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: const Text(
+          'Shopping List',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+      body: GridView.builder(
+        padding: const EdgeInsets.all(10),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,          
+          crossAxisSpacing: 10,       
+          mainAxisSpacing: 10,        
+          childAspectRatio: 3 / 4,    
+        ),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          final item = items[index];
+          return InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ItemPage(item: item)),
+              );
+            },
+            child: Card(
+              elevation: 4,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Hero(
+                      tag: item.imageUrl,
+                      child: Image.asset(
+                        item.imageUrl,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text(item.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                        Text("Rp ${item.price}"),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+```
+
+#### kode class item_page.dart 
+```dart
+import 'package:flutter/material.dart';
+import 'package:belanja/models/item.dart';
+
+class ItemPage extends StatelessWidget {
+  final Item item;
+
+  const ItemPage({super.key, required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: const Text(
+          'Shopping List',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_cart),
+            onPressed: () {
+            },
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Hero(   // Hero yang nyambung dengan home_page.dart
+              tag: item.imageUrl,
+              child: Image.asset(
+                item.imageUrl,
+                width: double.infinity,
+                height: 250,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.name,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "Rp ${item.price}",
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.green,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    item.description,
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+#### kode class main.dart 
+```dart
+import 'package:flutter/material.dart';
+import 'package:belanja/pages/home_page.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Belanja App',
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.blue,
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          iconTheme: IconThemeData(color: Colors.white), 
+        ),
+      ),
+      home: HomePage(),
+    );
+  }
+}
+```
+#### Output
+![tp2](img/gif3.gif)
+
+5. Sesuaikan dan modifikasi tampilan sehingga menjadi aplikasi yang menarik. Selain itu, pecah widget menjadi kode yang lebih kecil. Tambahkan Nama dan NIM di footer aplikasi belanja Anda.
+![tp2](img/gif4.gif)
+
+6. Selesaikan Praktikum 5: Navigasi dan Rute tersebut. Cobalah modifikasi menggunakan plugin go_router, lalu dokumentasikan dan push ke repository Anda berupa screenshot setiap hasil pekerjaan beserta penjelasannya di file README.md. Kumpulkan link commit repository GitHub Anda kepada dosen yang telah disepakati!
