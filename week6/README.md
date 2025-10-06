@@ -687,7 +687,7 @@ class MyApp extends StatelessWidget {
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
-          iconTheme: IconThemeData(color: Colors.white), 
+          iconTheme: IconThemeData(color: Colors.white),
         ),
       ),
       home: HomePage(),
