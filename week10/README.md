@@ -3,11 +3,11 @@
 ## PRAKTIKUM 1: Mengambil Foto dengan Kamera di Flutter
 
 ### Langkah 1: Buat Project Baru
-Buat project flutter baru dengan nama master_plan
+Buat project flutter baru dengan nama master_plan <br>
 ![Langkah1](img/L1.png)
 
 ### Langkah 2: Membuat model task.dart
-Buat file bernama task.dart 
+Buat file bernama task.dart  <br>
 ![Langkah2](img/l2.png)
 
 ### Langkah 3: Buat file plan.dart
@@ -43,8 +43,8 @@ Buat file bernama plan..dart
 ![Hasil](img/hasil.gif)
 
 ## TUGAS PRAKTIKUM 1: Dasar State dengan Model-View
-1. Selesaikan langkah-langkah praktikum tersebut, lalu dokumentasikan berupa GIF hasil akhir praktikum beserta penjelasannya di file README.md! Jika Anda menemukan ada yang error atau tidak berjalan dengan baik, silakan diperbaiki.
-![Hasil](img/hasil.gif) 
+1. Selesaikan langkah-langkah praktikum tersebut, lalu dokumentasikan berupa GIF hasil akhir praktikum beserta penjelasannya di file README.md! Jika Anda menemukan ada yang error atau tidak berjalan dengan baik, silakan diperbaiki. <br>
+![Hasil](img/hasil.gif) <br>
 Hasil akhir aplikasi Master Plan, daftar tugas dengan fitur centang dan tombol + untuk menambah tugas baru. Saat tombol ditekan, tugas baru muncul di daftar. Tampilan menggunakan AppBar ungu dan Floating Action Button bulat ungu
 
 2. Jelaskan maksud dari langkah 4 pada praktikum tersebut! Mengapa dilakukan demikian? <br>
@@ -53,8 +53,8 @@ Pada langkah 4 agar semua model plan.dart, task.dart dapat diimport secara efisi
 3. Mengapa perlu variabel plan di langkah 6 pada praktikum tersebut? Mengapa dibuat konstanta ? <br>
 Variabel plan digunakan untuk menyimpan data rencana (plan) yang akan ditampilkan dan dikelola di halaman PlanScreen.
 
-4. Lakukan capture hasil dari Langkah 9 berupa GIF, kemudian jelaskan apa yang telah Anda buat!
-![langkah9](img/run%20l9.gif)
+4. Lakukan capture hasil dari Langkah 9 berupa GIF, kemudian jelaskan apa yang telah Anda buat! <br>
+![langkah9](img/run%20l9.gif) <br>
 Tampilan aplikasi Master Plan yang menampilkan daftar tugas dengan checkbox dan tombol Floating Action Button (FAB) berikon “+”. Saat tombol + ditekan, aplikasi menambahkan baris tugas baru ke dalam daftar.
 
 5. Apa kegunaan method pada Langkah 11 dan 13 dalam lifecyle state ? <br>
@@ -64,17 +64,34 @@ Method initState() digunakan untuk menginisialisasi data atau objek yang diperlu
 ##  Praktikum 2: Mengelola Data Layer dengan InheritedWidget dan InheritedNotifier
 
 ### Langkah 1: Buat file plan_provider.dart
+![Langkah1](img/p2l1.png)
 ### Langkah 2: Edit main.dart
-
-### Langkah 3: Buat file plan.dart
-### Langkah 4: Buat file data_layer.dart
+![langkah2](img/p2l2.png)
+### Langkah 3: Tambah method pada model plan.dart
+![langkah3](img/p2l3.png)
+### Langkah 4: Pindah ke PlanScreen
+Edit PlanScreen agar menggunakan data dari PlanProvider. Hapus deklarasi variabel plan (ini akan membuat error). Kita akan perbaiki pada langkah 5 berikut ini.
 ### Langkah 5: Edit method _buildAddTaskButton
-### Langkah 6: Edit method _buildTaskTile
-### Langkah 7: Edit _buildList
-### Langkah 8: Tetap di class PlanScreen
-### Langkah 9: Tambah widget SafeArea
+![langkah5](img/p2l5.png)
 
+### Langkah 6: Edit method _buildTaskTile
+![langkah6](img/p2l6.png)
+
+### Langkah 7: Edit _buildList
+![langkah7](img/p2l7.png)
+
+### Langkah 8: Tetap di class PlanScreen
+Edit method build sehingga bisa tampil progress pada bagian bawah (footer). Caranya, bungkus (wrap) _buildList dengan widget Expanded dan masukkan ke dalam widget Column seperti kode pada Langkah 9.
+### Langkah 9: Tambah widget SafeArea
+![langkah9](img/p2l9.png)
 ## Tugas Praktikum 2: InheritedWidget
+2. Jelaskan mana yang dimaksud InheritedWidget pada langkah 1 tersebut! Mengapa yang digunakan InheritedNotifier? <br> 
+InheritedWidget digunakan untuk mewariskan data ke widget turunannya tanpa perlu meneruskan lewat konstruktor.Tetapi ini digunakan InheritedNotifier karena memakai ValueNotifier<Plan> yang bisa memberi tahu perubahan data secara otomatis ke widget lain.
+3. Jelaskan maksud dari method di langkah 3 pada praktikum tersebut! Mengapa dilakukan demikian?
+<br> Method (getter) itu dibuat untuk menghitung progres tugas secara otomatis dari data. completedCount menghitung berapa tugas yang sudah selesai. completenessMessage menampilkan hasilnya dalam bentuk teks. agar logika perhitungan progres tersimpan di model (Plan), bukan di tampilan (UI).
+4. Lakukan capture hasil dari Langkah 9 berupa GIF, kemudian jelaskan apa yang telah Anda buat!
+![hasilp2](img/hasilp2.gif) <br> Tampilan master plan menggunakan Flutter yang menampilkan daftar tugas (to-do list) dengan fitur untuk menambah, mengedit, dan menandai tugas sebagai selesai. Setiap perubahan data otomatis memperbarui tampilan berkat penggunaan state management sederhana dengan InheritedNotifier dan ValueNotifier.
+
 
 
 ## Praktikum 3: Membuat State di Multiple Screens
