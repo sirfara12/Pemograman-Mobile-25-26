@@ -96,18 +96,123 @@ InheritedWidget digunakan untuk mewariskan data ke widget turunannya tanpa perlu
 
 ## Praktikum 3: Membuat State di Multiple Screens
 ### Langkah 1: Edit PlanProvider
+![langkah1](img/p3l1.png)
 ### Langkah 2: Edit main.dart
+![langkah2](img/p3l2.png)
 ### Langkah 3: Edit plan_screen.dart
+![langkah3](img/p3l3.png)
 ### Langkah 4: Error
+Itu akan terjadi error setiap kali memanggil PlanProvider.of(context). Itu terjadi karena screen saat ini hanya menerima tugas-tugas untuk satu kelompok Plan, tapi sekarang PlanProvider menjadi list dari objek plan tersebut.
 ### Langkah 5: Tambah getter Plan
+![langkah5](img/p3l5.png)
 ### Langkah 6: Method initState()
+![langkah6](img/p3l6.png)
 ### Langkah 7: Widget build
+```dart
+ @override
+  Widget build(BuildContext context) {
+    ValueNotifier<List<Plan>> plansNotifier = PlanProvider.of(context);
+
+    return Scaffold(
+      appBar: AppBar(title: Text(_plan.name)),
+      body: ValueListenableBuilder<List<Plan>>(
+        valueListenable: plansNotifier,
+        builder: (context, plans, child) {
+          Plan currentPlan = plans.firstWhere((p) => p.name == plan.
+name);
+          return Column(
+            children: [
+              Expanded(child: _buildList(currentPlan)),
+              SafeArea(child: Text(currentPlan.
+completenessMessage)),
+            ],);},),
+      floatingActionButton: _buildAddTaskButton(context,)
+  ,);
+ }
+
+  Widget _buildAddTaskButton(BuildContext context) {
+    ValueNotifier<List<Plan>> planNotifier = PlanProvider.
+of(context);
+    return FloatingActionButton(
+      child: const Icon(Icons.add),
+      onPressed: () {
+        Plan currentPlan = plan;
+        int planIndex =
+            planNotifier.value.indexWhere((p) => p.name == currentPlan.name);
+        List<Task> updatedTasks = List<Task>.from(currentPlan.tasks)
+          ..add(const Task());
+        planNotifier.value = List<Plan>.from(planNotifier.value)
+          ..[planIndex] = Plan(
+            name: currentPlan.name,
+            tasks: updatedTasks,
+          );
+        plan = Plan(
+          name: currentPlan.name,
+          tasks: updatedTasks,
+        );},);
+  }
+```
 ### Langkah 8: Edit _buildTaskTile
+```dart
+ Widget _buildTaskTile(Task task, int index, BuildContext context)
+{
+    ValueNotifier<List<Plan>> planNotifier = PlanProvider.
+of(context);
+
+    return ListTile(
+      leading: Checkbox(
+         value: task.complete,
+         onChanged: (selected) {
+           Plan currentPlan = plan;
+           int planIndex = planNotifier.value
+              .indexWhere((p) => p.name == currentPlan.name);
+           planNotifier.value = List<Plan>.from(planNotifier.value)
+             ..[planIndex] = Plan(
+               name: currentPlan.name,
+               tasks: List<Task>.from(currentPlan.tasks)
+                 ..[index] = Task(
+                   description: task.description,
+                   complete: selected ?? false,
+                 ),);
+         }),
+      title: TextFormField(
+        initialValue: task.description,
+        onChanged: (text) {
+          Plan currentPlan = plan;
+          int planIndex =
+             planNotifier.value.indexWhere((p) => p.name ==
+currentPlan.name);
+          planNotifier.value = List<Plan>.from(planNotifier.value)
+            ..[planIndex] = Plan(
+              name: currentPlan.name,
+              tasks: List<Task>.from(currentPlan.tasks)
+                ..[index] = Task(
+                  description: text,
+                  complete: task.complete,
+                ),
+            );
+},),);}
+```
 ### Langkah 9: Buat screen baru
+![langkah9](img/filebaru.png)
 ### Langkah 10: Pindah ke class _PlanCreatorScreenState
+![langkah10](img/p3l10.png)
 ### Langkah 11: Pindah ke method build
+![langkah11](img/p3l11.png)
+
 ### Langkah 12: Buat widget _buildListCreator
+![langkah12](img/p3l12.png)
+
 ### Langkah 13: Buat void addPlan()
+![langkah13](img/p3l13.png)
+
 ### Langkah 14: Buat widget _buildMasterPlans()
+![langkah14](img/p3l14.png)
 
 ## Tugas Praktikum 3: State di Multiple Screens
+2. Berdasarkan Praktikum 3 yang telah Anda lakukan, jelaskan maksud dari gambar diagram berikut ini! <br>
+![gambar](img/soal.png) <br>
+Diagram diatas menunjukkan bagaimana state tunggal berupa daftar Plan dikelola di PlanProvider (InheritedWidget) yang berada di atas widget tree sehingga dapat diakses oleh beberapa screen. Di PlanCreatorScreen, pengguna dapat menambah plan baru dan melihat daftar plan melalui ListView. Saat salah satu plan dipilih, Navigator.push membuka PlanScreen yang menampilkan detail task dan completenessMessage plan tersebut. Konsep ini menekankan “Lift State Up”, di mana state tetap berada di tingkat atas, memungkinkan kedua screen membaca dan memodifikasi state yang sama sehingga perubahan di satu screen langsung tercermin di screen lain.
+3. Lakukan capture hasil dari Langkah 14 berupa GIF, kemudian jelaskan apa yang telah Anda buat!
+![hasilakhir](img/hasilakhirprak3.gif) <br>
+Membuat fitur menambahkan plan baru di aplikasi Master Plans. Pengguna mengetik nama plan di TextField “Add a plan”, kemudian menekan enter, dan plan tersebut langsung muncul di daftar di bawahnya. Sebelumnya tampilan menampilkan pesan “Anda belum memiliki rencana apapun”, tetapi setelah plan ditambahkan, pesan ini hilang dan plan baru tampil di ListView.
