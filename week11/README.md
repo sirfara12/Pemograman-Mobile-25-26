@@ -95,10 +95,49 @@ Tambahkan kode  pada onPressed di ElevatedButton.
 
 ## Praktikum 2: Menggunakan await/async untuk menghindari callbacks
 ### Langkah 1: Buka file main.dart
+menambahkan tiga method berisi kode seperti berikut di dalam class _FuturePageState.
+
+```dart
+Future<int> returnOneAsync() async {
+  await Future.delayed(const Duration(seconds: 3));
+  return 1;
+}
+
+Future<int> returnTwoAsync() async {
+  await Future.delayed(const Duration(seconds: 3));
+  return 2;
+}
+
+Future<int> returnThreeAsync() async {
+  await Future.delayed(const Duration(seconds: 3));
+  return 3;
+}
+```
+
 ### Langkah 2: Tambah method count()
+```dart
+Future count() async {
+    int total = 0;
+    total = await returnOneAsync();
+    total += await returnTwoAsync();
+    total += await returnThreeAsync();
+
+    setState(() {
+      result = total.toString();
+    });
+  }
+```
 ### Langkah 3: Panggil count()
+```dart
+onPressed: () {
+  count();
+},
+```
 ### Langkah 4: Run
 
+#### Soal 4
+1. Jelaskan maksud kode langkah 1 dan 2 tersebut! <br> Jawaban: Langkah 1 membuat tiga fungsi asynchronous yang menunggu tiga detik sebelum mengembalikan nilai 1, 2, dan 3. Langkah 2 menggunakan fungsi count() untuk memanggil ketiganya secara berurutan, menjumlahkan hasilnya menjadi 6, lalu menampilkannya di layar dengan setState().
+2. Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 4" <br> ![soal4](img/p2l4-.gif)
 
 ## Praktikum 3: Menggunakan Completer di Future
 
