@@ -370,6 +370,8 @@ else if (snapshot.connectionState == ConnectionState.done) {
 }
 ```
 #### Soal 14
+1. Apakah ada perbedaan UI dengan langkah sebelumnya? Mengapa demikian? Tidak ada perbedaan 
+2. Capture hasil praktikum Anda berupa GIF dan lampirkan di README. La0lu lakukan commit dengan pesan "W11: Soal 14".  <br> ![soal13](img/soal13.gif)
 
 ## Praktikum 8: Navigation route dengan Future Function
 

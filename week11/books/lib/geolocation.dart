@@ -40,12 +40,16 @@ class _LocationScreenState extends State<LocationScreen> {
         child: FutureBuilder<Position>(
           future: position,
           builder: (BuildContext context, AsyncSnapshot<Position> snapshot) {
+           
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
-            } else if (snapshot.connectionState == ConnectionState.done) {
+            } 
+
+            else if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else if (snapshot.hasData) {
+                return const Text('Something terrible happened!');
+              } 
+              else if (snapshot.hasData) {
                 return Text(
                   'Latitude: ${snapshot.data!.latitude}\nLongitude: ${snapshot.data!.longitude}',
                   textAlign: TextAlign.center,
