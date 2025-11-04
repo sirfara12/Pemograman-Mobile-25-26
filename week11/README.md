@@ -173,8 +173,13 @@ Kesimpulan perbedaan: <br>
 ## Praktikum 4: Memanggil Future secara paralel
 
 ### Langkah 1: Buka file main.dart
+![langka1](img/p4l1.png)
 ### Langkah 2: Edit onPressed()
+![langka2](img/p4l2.png)
+
 ### Langkah 3: Run
+#### Soal 7 
+1. Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 7". ![soal7](img/soal7.png)
 ### Langkah 4: Ganti variabel futureGroup
 
 ## Praktikum 4: Memanggil Future secara paralel
