@@ -86,7 +86,7 @@ Tambah method ini ke dalam class _FuturePageState yang berguna untuk mengambil d
 ![soal2](img/soal2.png)
 
 ### Langkah 5: Tambah kode di ElevatedButton
-Tambahkan kode  pada onPressed di ElevatedButton.
+Tambahkan kode  pada onPressed di ElevatedButton. <br>
 ![Langkah5](img/l5.png)
 #### Soal 3
 1. Jelaskan maksud kode langkah 5 tersebut terkait substring dan catchError! <br> jawaban: substring(0,300) membatasi tampilan hasil JSON agar tidak terlalu panjang, sedangkan catchError menangkap kesalahan agar program tidak crash dan bisa menampilkan pesan error dengan aman.
@@ -142,9 +142,17 @@ onPressed: () {
 ## Praktikum 3: Menggunakan Completer di Future
 
 ### Langkah 1: Buka file main.dart
+![Langkah 1](img/p3l1.png)
 ### Langkah 2: Tambahkan variabel dan method
+![langkah2](img/p3l2.png)
 ### Langkah 3: Ganti isi kode onPressed()
+![langkah3](img/p3l3.png)
 ### Langkah 4: Run
+ Run, Setelah 5 detik, maka angka 42 akan tampil.
+#### Soal 5 
+1. Jelaskan maksud kode langkah 2 tersebut! <br> Jawaban : Variabel late Completer completer digunakan untuk mengontrol Future secara manual. Method getNumber() membuat Completer baru, memanggil calculate(), dan mengembalikan Future yang belum selesai. Method calculate() menunggu 5 detik dengan Future.delayed(), kemudian menyelesaikan Completer menggunakan completer.complete(42) yang memberikan nilai 42.
+
+2. Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 5". <br> ![langkah4](img/p3.gif)
 ### Langkah 5: Ganti method calculate()
 ### Langkah 6: Pindah ke onPressed()
 

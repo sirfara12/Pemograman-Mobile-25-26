@@ -32,6 +32,19 @@ class FuturePage extends StatefulWidget {
 class _FuturePageState extends State<FuturePage> {
   String result = '';
   bool isLoading = false;
+  late Completer<int> completer;
+
+  Future<int> getNumber() {
+    completer = Completer<int>();
+    calculate();
+    return completer.future;
+  }
+
+  Future<void> calculate() async {
+    await Future.delayed(const Duration(seconds: 5));
+    completer.complete(42);
+  }
+
 
   Future<http.Response> getData() async {
     const authority = 'www.googleapis.com';
@@ -72,6 +85,7 @@ class _FuturePageState extends State<FuturePage> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,7 +99,13 @@ class _FuturePageState extends State<FuturePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: count,
+              onPressed: () {
+                getNumber().then((value) {
+                  setState(() {
+                    result = value.toString();
+                  });
+                });
+              },
               child: const Text('GO!'),
             ),
             const SizedBox(height: 40),
