@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:async/async.dart';
+// import 'package:async/async.dart';
 
 void main() {
   runApp(const MyApp());
@@ -48,7 +48,7 @@ class _FuturePageState extends State<FuturePage> {
       completer.completeError({});
     }
   }
-  void returnFG() {
+  /*void returnFG() {
     FutureGroup<int> futureGroup = FutureGroup<int>();
     futureGroup.add(returnOneAsync());
     futureGroup.add(returnTwoAsync());
@@ -63,8 +63,28 @@ class _FuturePageState extends State<FuturePage> {
         result = total.toString();
       });
     });
-  }
+  }*/
 
+  Future<void> returnFG() async {
+    final futures = await Future.wait<int>([
+      returnOneAsync(),
+      returnTwoAsync(),
+      returnThreeAsync(),
+    ]);
+
+    int total = 0;
+    for (var value in futures) {
+      total += value;
+    }
+
+    setState(() {
+      result = total.toString();
+    });
+  }
+  Future returnError() async {
+    await Future.delayed(const Duration(seconds: 2));
+    throw Exception('Something terrible happened!');
+  }
 
   Future<http.Response> getData() async {
     const authority = 'www.googleapis.com';
@@ -119,8 +139,28 @@ class _FuturePageState extends State<FuturePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.grey[300],
+                foregroundColor: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+              ),
               onPressed: () {
-                returnFG();
+                returnError()
+                .then((value) {
+                  setState(() {
+                    result = 'Success';
+                  });
+                })
+                .catchError((onError) {
+                  setState(() {
+                    result = onError.toString();
+                  });
+                })
+                .whenComplete(() => print('Complete'));
+                //returnFG();
                 /*getNumber().then((value) {
                   setState(() {
                     result = value.toString();

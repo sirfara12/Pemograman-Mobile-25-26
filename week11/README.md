@@ -179,14 +179,24 @@ Kesimpulan perbedaan: <br>
 
 ### Langkah 3: Run
 #### Soal 7 
-1. Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 7". ![soal7](img/soal7.png)
+1. Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 7". <br> ![soal7](img/soal7.png)
 ### Langkah 4: Ganti variabel futureGroup
+![langkah4](img/p4l4.png)
 
-## Praktikum 4: Memanggil Future secara paralel
+#### Soal 8
+1. Jelaskan maksud perbedaan kode langkah 1 dan 4! <br> Langkah 1 menggunakan FutureGroup dari package async yang menambahkan Future satu per satu dengan method .add() dan harus ditutup dengan .close() sebelum diproses. Langkah 4 menggunakan Future.wait() yang merupakan method bawaan Dart, lebih ringkas karena langsung mendefinisikan semua Future dalam bentuk List tanpa perlu memanggil .close()
+
+## Praktikum 5: Menangani Respon Error pada Async Code
 
 ### Langkah 1: Buka file main.dart
+![langkah1](img/p5l1.png)
 ### Langkah 2: ElevatedButton
+![langkah2](img/p5l2.png)
 ### Langkah 3: Run
+![langkah3](img/p5l3.png)
+
+#### Soal 9 
+1. Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 9". <bt> ![soal9](img/soal9-.gif)
 ### Langkah 4: Tambah method handleError()
 
 ## Praktikum 6: Menggunakan Future dengan StatefulWidget
