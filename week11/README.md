@@ -154,8 +154,21 @@ onPressed: () {
 
 2. Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 5". <br> ![langkah4](img/p3.gif)
 ### Langkah 5: Ganti method calculate()
+Gantilah isi code method calculate() <br> ![langkah5](img/p3l5.png)
 ### Langkah 6: Pindah ke onPressed()
+![langkah6](img/p3l6.png)
+#### Soal 6
+1. Jelaskan maksud perbedaan kode langkah 2 dengan langkah 5-6 tersebut!
+<br> Langkah 2 menggunakan method calculate() tanpa penanganan error, sehingga jika terjadi kesalahan aplikasi akan crash. Langkah 5 menambahkan try-catch untuk menangkap error dan mengirimnya melalui completer.completeError({}). Langkah 6 menambahkan .catchError() pada UI untuk menampilkan pesan "An error occurred" kepada user. Dengan penambahan error handling ini, aplikasi menjadi lebih stabil dan user-friendly. <br>
+Kesimpulan perbedaan: <br>
+| Aspek | Langkah 2 | Langkah 5-6 |
+|-------|-----------|-------------|
+| **Error Handling** | Tidak ada | Ada (try-catch + catchError) |
+| **Jika Error** | Crash/unhandled | Tampil pesan error |
+| **User Experience** | Tdak baik (app bisa crash) | Baik (user diberi feedback) |
+| **Production Ready** | Tidak | Ya | 
 
+2. Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 6". <br> ![soal6](img/p3soal6.png)
 
 ## Praktikum 4: Memanggil Future secara paralel
 
