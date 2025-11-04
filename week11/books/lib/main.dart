@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'geolocation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 // import 'package:async/async.dart';
@@ -6,6 +7,7 @@ import 'package:http/http.dart' as http;
 void main() {
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -18,7 +20,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const FuturePage(),
+    //home: const FuturePage(),
+      home: const LocationScreen(),
+
     );
   }
 }
@@ -40,6 +44,7 @@ class _FuturePageState extends State<FuturePage> {
     calculate();
     return completer.future;
   }
+
   Future<void> calculate() async {
     try {
       await Future.delayed(const Duration(seconds: 5));
@@ -81,9 +86,22 @@ class _FuturePageState extends State<FuturePage> {
       result = total.toString();
     });
   }
+
   Future returnError() async {
     await Future.delayed(const Duration(seconds: 2));
     throw Exception('Something terrible happened!');
+  }
+
+  Future handleError() async {
+    try {
+      await returnError();
+    } catch (error) {
+      setState(() {
+        result = error.toString();
+      });
+    } finally {
+      print('Complete');
+    }
   }
 
   Future<http.Response> getData() async {
@@ -118,13 +136,11 @@ class _FuturePageState extends State<FuturePage> {
     total += await returnTwoAsync();
     total += await returnThreeAsync();
 
-    
     setState(() {
       isLoading = false;
       result = total.toString();
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -142,24 +158,25 @@ class _FuturePageState extends State<FuturePage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey[300],
                 foregroundColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 15,
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
               ),
               onPressed: () {
                 returnError()
-                .then((value) {
-                  setState(() {
-                    result = 'Success';
-                  });
-                })
-                .catchError((onError) {
-                  setState(() {
-                    result = onError.toString();
-                  });
-                })
-                .whenComplete(() => print('Complete'));
+                    .then((value) {
+                      setState(() {
+                        result = 'Success';
+                      });
+                    })
+                    .catchError((onError) {
+                      setState(() {
+                        result = onError.toString();
+                      });
+                    })
+                    .whenComplete(() => print('Complete'));
                 //returnFG();
                 /*getNumber().then((value) {
                   setState(() {
@@ -172,15 +189,9 @@ class _FuturePageState extends State<FuturePage> {
               child: const Text('GO!'),
             ),
             const SizedBox(height: 40),
-            Text(
-              result,
-              style: const TextStyle(fontSize: 24),
-            ),
+            Text(result, style: const TextStyle(fontSize: 24)),
             const SizedBox(height: 40),
-            if (isLoading)
-              const CircularProgressIndicator(
-                color: Colors.blue,
-              ),
+            if (isLoading) const CircularProgressIndicator(color: Colors.blue),
           ],
         ),
       ),

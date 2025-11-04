@@ -198,17 +198,86 @@ Kesimpulan perbedaan: <br>
 #### Soal 9 
 1. Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 9". <bt> ![soal9](img/soal9-.gif)
 ### Langkah 4: Tambah method handleError()
+![langkah4](img/p5l4.png)
+#### Soal 10
+1. Panggil method handleError() tersebut di ElevatedButton, lalu run. Apa hasilnya? Jelaskan perbedaan kode langkah 1 dan 4! <br> ![soal10](img/soal10-.gif) <br> ![DebugComplete](img/debugcom.png) <br> Pada langkah 1 (callback pattern), error ditangani di luar method menggunakan .catchError() dan .whenComplete(), sehingga struktur kodenya berupa rantai callback yang kurang intuitif dan memisahkan logika utama dari penanganan error. Sedangkan pada langkah 4 (try-catch pattern), error ditangani langsung di dalam method menggunakan blok try-catch-finally, sehingga lebih terpusat, mudah dibaca, dan mirip dengan kode sinkron.
+
 
 ## Praktikum 6: Menggunakan Future dengan StatefulWidget
 
 ### Langkah 1: install plugin geolocator
+Tambahkan plugin geolocator dengan mengetik perintah berikut di terminal.
+```dart
+flutter pub add geolocator
+```
 ### Langkah 2: Tambah permission GPS
+```dart
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+```
+
 ### Langkah 3: Buat file geolocation.dart
+![langkah3](img/p6l3.png)
 ### Langkah 4: Buat StatefulWidget
+![langkah4](img/p6l4.png)
 ### Langkah 5: Isi kode geolocation.dart
+```dart
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+
+class LocationScreen extends StatefulWidget {
+  const LocationScreen({super.key});
+
+  @override
+  State<LocationScreen> createState() => _LocationScreenState();
+}
+
+class _LocationScreenState extends State<LocationScreen> {
+  String myPosition = '';
+  
+  @override
+  void initState() {
+    super.initState();
+    getPosition().then((Position myPos) {
+      myPosition =
+          'Latitude: ${myPos.latitude.toString()} - Longitude: ${myPos.longitude.toString()}';
+      setState(() {
+        myPosition = myPosition;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Sirfara - Current Location')),
+      body: Center(child: Text(myPosition)),
+    );
+  }
+
+  Future<Position> getPosition() async {
+    await Geolocator.requestPermission();
+    await Geolocator.isLocationServiceEnabled();
+    Position? position = await Geolocator.getCurrentPosition();
+    return position;
+  }
+}
+```
+#### Soal 11 
+1. Tambahkan nama panggilan Anda pada tiap properti title sebagai identitas pekerjaan Anda. <br> ![soal11](img/soal11.png)
 ### Langkah 6: Edit main.dart
+![Langkah6](img/p6l6.png)
 ### Langkah 7: Run
+![langkah7](img/p6l7.png)
 ### Langkah 8: Tambahkan animasi loading
+![langkah8](img/p6l8.png)
+
+#### Soal 12
+1. Jika Anda tidak melihat animasi loading tampil, kemungkinan itu berjalan sangat cepat. Tambahkan delay pada method getPosition() dengan kode await Future.delayed(const Duration(seconds: 3)); <br>
+![soal12](img/soal121.gif)
+2. Apakah Anda mendapatkan koordinat GPS ketika run di browser? Mengapa demikian? <br> Ya, saya mendapatkan koordinat GPS ketika aplikasi dijalankan di HP (perangkat fisik). Hal ini karena perangkat mobile memiliki sensor GPS bawaan yang dapat diakses oleh plugin Geolocator untuk mengambil data lokasi secara akurat.
+3. Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 12". <br>
+![soal12](img/soal121.gif)
 
 ## Praktikum 7: Manajemen Future dengan FutureBuilder
 
