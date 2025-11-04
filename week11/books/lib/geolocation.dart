@@ -10,11 +10,13 @@ class LocationScreen extends StatefulWidget {
 
 class _LocationScreenState extends State<LocationScreen> {
   String myPosition = '';
-  
+  Future<Position>? position;
+
   @override
   void initState() {
     super.initState();
-    getPosition().then((Position myPos) {
+    position = getPosition();
+    position!.then((Position myPos) {
       myPosition =
           'Latitude: ${myPos.latitude.toString()} - Longitude: ${myPos.longitude.toString()}';
       setState(() {
@@ -23,12 +25,8 @@ class _LocationScreenState extends State<LocationScreen> {
     });
   }
 
-  @override
+@override
   Widget build(BuildContext context) {
-    final myWidget = myPosition == ''
-        ? const CircularProgressIndicator()
-        : Text(myPosition);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -38,7 +36,27 @@ class _LocationScreenState extends State<LocationScreen> {
         backgroundColor: Colors.blue,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Center(child: myWidget),
+      body: Center(
+        child: FutureBuilder<Position>(
+          future: position,
+          builder: (BuildContext context, AsyncSnapshot<Position> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else if (snapshot.hasData) {
+                return Text(
+                  'Latitude: ${snapshot.data!.latitude}\nLongitude: ${snapshot.data!.longitude}',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 16),
+                );
+              }
+            }
+            return const Text('Tidak ada data lokasi');
+          },
+        ),
+      ),
     );
   }
 

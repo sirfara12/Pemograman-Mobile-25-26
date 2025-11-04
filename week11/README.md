@@ -282,10 +282,94 @@ class _LocationScreenState extends State<LocationScreen> {
 ## Praktikum 7: Manajemen Future dengan FutureBuilder
 
 ### Langkah 1: Modifikasi method getPosition()
+```dart
+ Future<Position> getPosition() async {
+    await Future.delayed(const Duration(seconds: 3));
+    await Geolocator.requestPermission();
+    await Geolocator.isLocationServiceEnabled();
+    Position? position = await Geolocator.getCurrentPosition();
+    return position;
+  }
+}
+```
 ### Langkah 2: Tambah variabel
+tambah method dan set variabel position
+```dart
+Future<Position>? position;
+```
+
 ### Langkah 3: Tambah initState()
+Tambah method ini dan set variabel position
+```dart
+@override
+  void initState() {
+    super.initState();
+    position = getPosition();
+    position!.then((Position myPos) {
+      myPosition =
+          'Latitude: ${myPos.latitude.toString()} - Longitude: ${myPos.longitude.toString()}';
+      setState(() {
+        myPosition = myPosition;
+      });
+    });
+  }
+```
 ### Langkah 4: Edit method build()
+Ketik kode berikut dan sesuaikan. Kode lama bisa Anda comment atau hapus.
+```dart
+
+@override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Sirfara - Current Location',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.blue,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
+      body: Center(
+        child: FutureBuilder<Position>(
+          future: position,
+          builder: (BuildContext context, AsyncSnapshot<Position> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else if (snapshot.hasData) {
+                return Text(
+                  'Latitude: ${snapshot.data!.latitude}\nLongitude: ${snapshot.data!.longitude}',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 16),
+                );
+              }
+            }
+            return const Text('Tidak ada data lokasi');
+          },
+        ),
+      ),
+    );
+  }
+```
+
+#### Soal 5
+1. Apakah ada perbedaan UI dengan praktikum sebelumnya? Mengapa demikian? <br> ada perbedaan UI yang signifikan di bagian tengah layar (body), Praktikum Sebelumnya (Menggunakan setState) Praktikum ini Menggunakan FutureBuilder.
+2. Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 13". <br> ![soal13](img/soal13.gif)
+3. Seperti yang Anda lihat, menggunakan FutureBuilder lebih efisien, clean, dan reactive dengan Future bersama UI.
+
 ### Langkah 5: Tambah handling error
+Tambahkan kode berikut untuk menangani ketika terjadi error. Kemudian hot restart.
+```dart
+else if (snapshot.connectionState == ConnectionState.done) {
+  if (snapshot.hasError) {
+     return Text('Something terrible happened!');
+  }
+  return Text(snapshot.data.toString());
+}
+```
+#### Soal 14
 
 ## Praktikum 8: Navigation route dengan Future Function
 
