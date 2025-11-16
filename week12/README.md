@@ -765,14 +765,125 @@ Hasilnya, setiap detik akan tampil angka baru seperti berikut.
 
 3. Lalu lakukan commit dengan pesan "W12: Jawaban Soal 12".
 
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
+## Praktikum 7: BLoC Pattern
+
+### Langkah 1: Buat Project baru
+Buatlah sebuah project flutter baru dengan nama bloc_random_nama (beri nama panggilan Anda) di folder week-12/src/ repository GitHub Anda. Lalu buat file baru di folder lib dengan nama random_bloc.dart
+
+### Langkah 2: Isi kode random_bloc.dart
+Ketik kode impor berikut ini.
+
+### Langkah 3: Buat class RandomNumberBloc()
+
+### Langkah 4: Buat variabel StreamController
+Di dalam class RandomNumberBloc() ketik variabel berikut ini
+```dart
+  final _generateRandomController = StreamController<void>();
+  final _randomNumberController = StreamController<int>();
+  Sink<void> get generateRandom => _generateRandomController.sink;
+  Stream<int> get randomNumber => _randomNumberController.stream;
+```
+
+### Langkah 5: Buat constructor
+```dart
+  RandomNumberBloc() {
+    _generateRandomController.stream.listen((_) {
+      final random = Random().nextInt(10);
+    _randomNumberController.sink.add(random);
+    });
+  }
+```
+### Langkah 6: Buat method dispose()
+```dart
+   void dispose() {
+    _generateRandomController.close();
+    _randomNumberController.close();
+  }
+```
+### Langkah 7: Edit main.dart
+```dart
+import 'package:flutter/material.dart';
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'BLoC Random Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const RandomScreen(),
+    );
+  }
+}
+```
+### Langkah 8: Buat file baru random_screen.dart
+Di dalam folder lib project Anda, buatlah file baru ini.
+
+### Langkah 9: Lakukan impor material dan random_bloc.dart
+Ketik kode ini di file baru random_screen.dart
+```dart
+import 'package:flutter/material.dart';
+import 'random_bloc.dart';
+```
+### Langkah 10: Buat StatefulWidget RandomScreen
+Buatlah di dalam file random_screen.dart
+
+### Langkah 11: Buat variabel
+Ketik kode ini di dalam class _RandomScreenState
+```dart
+final _bloc = RandomNumberBloc();
+```
+### Langkah 12: Buat method dispose()
+Ketik kode ini di dalam class _StreamHomePageState
+```dart
+@override
+void dispose() {
+  _bloc.dispose();
+  super.dispose();
+}
+```
+### Langkah 13: Edit method build()
+Ketik kode ini di dalam class _StreamHomePageState
+```dart
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(title: const Text('Random Number')),
+    body: Center(
+      child: StreamBuilder<int>(
+        stream: _bloc.randomNumber,
+        initialData: 0,
+        builder: (context, snapshot) {
+          return Text(
+            'Random Number: ${snapshot.data}',
+            style: const TextStyle(fontSize: 24),
+          );
+        },
+      ),
+    ),
+    floatingActionButton: FloatingActionButton(
+      onPressed: () => _bloc.generateRandom.add(null),
+      child: const Icon(Icons.refresh),
+    ),
+  );
+}
+}
+```
+
+Run aplikasi, maka Anda akan melihat angka acak antara angka 0 sampai 9 setiap kali menekan tombol FloactingActionButton.
 
 
+### Soal 13
+1. Jelaskan maksud praktikum ini ! Dimanakah letak konsep pola BLoC-nya ? <br> Praktikum ini bertujuan untuk mengimplementasikan pola BLoC (Business Logic Component) dalam aplikasi Flutter, sehingga logika bisnis (pembuatan angka acak) dipisahkan dari tampilan UI. Dengan pola BLoC, data dan event dikelola melalui stream sehingga UI dapat diperbarui secara reaktif tanpa memanggil setState() secara langsung. <br> 
+Letak Konsep Pola BLoC, 
+RandomNumberBloc menangani logika bisnis menerima event input melalui _generateRandomController dan mengirim angka acak ke _randomNumberController. UI (RandomScreen) hanya mendengarkan output stream dan mengirim event ke BLoC, sehingga logika bisnis terpisah dari tampilan.
 
+2. Capture hasil praktikum Anda berupa GIF dan lampirkan di README. ![soal13](img/image.png)
 
-
+3. Lalu lakukan commit dengan pesan "W12: Jawaban Soal 13".
