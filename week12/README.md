@@ -202,8 +202,27 @@ Lakukan running pada aplikasi Flutter Anda, maka akan terlihat berubah warna bac
 
 2. Lakukan commit hasil jawaban Soal 4 dengan pesan "W12: Jawaban Soal 4
 
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
+### Langkah 13: Ganti isi method changeColor()
+```dart
+void changeColor() {
+    colorStream.getColors().listen((eventColor) {
+      setState(() {
+        bgColor = eventColor;
+      });
+    });
+  }
+```
+
+#### Soal 5
+1. Jelaskan perbedaan menggunakan listen dan await for (langkah 9) ! <br>
+- await for (Seperti pada Langkah 9)
+Fungsi Eksekusi (Bloking/Jeda): Ketika Anda menggunakan await for, eksekusi kode di dalam fungsi async tersebut akan menjeda atau berhenti melanjutkan ke baris kode berikutnya di dalam fungsi yang sama, sampai stream mengeluarkan data. await for akan memproses semua event dari stream secara berurutan. <br>
+- listen()
+Fungsi Eksekusi (Non-Bloking): Ketika Anda memanggil listen(), Anda hanya mendaftarkan sebuah fungsi (callback) yang akan dipanggil setiap kali stream mengeluarkan data baru. Setelah pendaftaran ini, eksekusi kode di fungsi Anda akan langsung dilanjutkan tanpa harus menunggu data dari stream.
+<br> jadi await for membuat fungsi menunggu data secara berurutan sedangkan listen mendaftarkan callback dan membiarkan fungsi berjalan tanpa menunggu.
+
+2. Lakukan commit hasil jawaban Soal 5 dengan pesan "W12: Jawaban Soal 5"
+
 ### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart
