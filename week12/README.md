@@ -457,16 +457,106 @@ handleError: (error, trace, sink) { sink.add(-1); }: Ini adalah penanganan error
 3. Lalu lakukan commit dengan pesan "W12: Jawaban Soal 8".
 
 
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
+## Praktikum 4: Subscribe ke stream events
+
+### Langkah 1: Tambah variabel
+Tambahkan variabel berikut di class _StreamHomePageState
+```dart
+late StreamSubscription subscription;
+```
+### Langkah 2: Edit initState()
+Edit kode seperti berikut ini.
+```dart
+subscription = stream
+      .transform(transformer)
+      .listen(
+        (event) {
+          setState(() {
+            lastNumber = event;
+          });
+        },
+```
+
+### Langkah 3: Tetap di initState()
+Tambahkan kode berikut ini.
+```dart
+    subscription.onError((error) {
+      setState(() {
+        lastNumber = -1;
+      });
+    });
+```
+### Langkah 4: Tambah properti onDone()
+Tambahkan dibawahnya kode ini setelah onError
+```dart
+subscription.onDone(() {
+      print("Stream has been called 'done'");
+    });
+```
+
+### Langkah 5: Tambah method baru
+Ketik method ini di dalam class _StreamHomePageState
+```dart
+  void stopStream() {
+    numberStreamController.close();
+  }
+```
+
+### Langkah 6: Pindah ke method dispose()
+Jika method dispose() belum ada, Anda dapat mengetiknya dan dibuat override. Ketik kode ini didalamnya.
+```dart
+  @override
+  void dispose() {
+    numberStreamController.close();
+    _colorSubscription.cancel();
+    subscription.cancel(); 
+```
+
+### Langkah 7: Pindah ke method build()
+Tambahkan button kedua dengan isi kode seperti berikut ini.
+```dart
+ElevatedButton(
+                onPressed: stopStream,
+                child: const Text('Stop Subscription'),
+              ),
+```
+
+### Langkah 8: Edit method addRandomNumber()
+Edit kode seperti berikut ini. 
+```dart
+ void addRandomNumber() {
+    Random random = Random();
+    int myNum = random.nextInt(10);
+    if (!numberStreamController.isClosed) { 
+      numberStream.addNumberToSink(myNum);
+    } else {
+      setState(() {
+        lastNumber = -1;
+      });
+    }
+  }
+```
+### Langkah 9: Run
+Anda akan melihat dua button seperti gambar berikut.
+
+### Langkah 10: Tekan button ‘Stop Subscription'
+Anda akan melihat pesan di Debug Console seperti berikut.
+![soal9](img/soal9.png)
+
+#### Soal 9
+1. Jelaskan maksud kode langkah 2, 6 dan 8 tersebut!
+- Langkah 2 (initState)
+Mendaftarkan listener pada stream untuk menerima data secara real-time dan memperbarui UI, serta menyimpan subscription untuk kontrol penuh terhadap stream.
+- Langkah 6 (dispose)
+Membatalkan subscription saat widget dihancurkan untuk mencegah memory leak dan menghentikan listener.
+- Langkah 8 (addRandomNumber)
+Memeriksa keaktifan stream sebelum mengirim data; jika stream sudah ditutup, data tidak dikirim dan UI diperbarui untuk mencegah error.
+
+2. Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+![soal9](img/soal9.1.png)
+
+3. Lalu lakukan commit dengan pesan "W12: Jawaban Soal 9".
+
 ### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart
