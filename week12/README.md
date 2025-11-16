@@ -71,9 +71,54 @@ Widget build(BuildContext context) {
 
 3. Lakukan commit hasil jawaban Soal 1 dengan pesan "W12: Jawaban Soal 1"
 
-### Langkah 2: Buka file main.dart
+### Langkah 3: Buat file baru stream.dart
+Buat file baru di folder lib project Anda. Lalu isi dengan kode berikut.
+```dart
+import 'package:flutter/material.dart';
 
-### Langkah 2: Buka file main.dart
+class ColorStream{
+  
+}
+```
+
+### Langkah 4: Tambah variabel colors
+Tambahkan variabel di dalam class ColorStream seperti berikut.
+```dart
+final List<Color> colors = [
+  // 5 Warna Awal
+  Colors.blueGrey,
+  Colors.amber,
+  Colors.deepPurple,
+  Colors.lightBlue,
+  Colors.teal,
+];
+```
+#### Soal 2
+1. Tambahkan 5 warna lainnya sesuai keinginan Anda pada variabel colors tersebut.
+```dart
+import 'package:flutter/material.dart';
+
+class ColorStream {
+  // Daftar 10 warna, 5 warna awal + 5 warna tambahan (pilihan bebas)
+  final List<Color> colors = [
+    // 5 Warna Awal
+    Colors.blueGrey,
+    Colors.amber,
+    Colors.deepPurple,
+    Colors.lightBlue,
+    Colors.teal,
+
+    // 5 Warna Tambahan (Pilihan Baru)
+    Colors.pinkAccent,   // Warna pink yang lebih cerah
+    Colors.lime,         // Hijau kekuningan
+    Colors.cyan,         // Biru kehijauan
+    Colors.brown,        // Cokelat
+    Colors.deepOrange,   // Oranye tua
+  ];
+}
+```
+2. Lakukan commit hasil jawaban Soal 2 dengan pesan "W12: Jawaban Soal 2"
+
 ### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart
