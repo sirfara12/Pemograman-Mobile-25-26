@@ -11,6 +11,10 @@ class NumberStream {
   void close() {
     controller.close();
   }
+
+  addError() {
+    controller.sink.addError('error');
+  }
 }
 
 class ColorStream {
@@ -28,10 +32,9 @@ class ColorStream {
   ];
 
   Stream<Color> getColors() async* {
-    yield* Stream.periodic(
-      const Duration(seconds: 1), (int t) {
-        int index = t % colors.length;
-        return colors[index];
+    yield* Stream.periodic(const Duration(seconds: 1), (int t) {
+      int index = t % colors.length;
+      return colors[index];
     });
   }
 }

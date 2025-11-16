@@ -348,17 +348,54 @@ Lakukan running pada aplikasi Flutter Anda, maka akan terlihat seperti gambar be
 
 ### Langkah 13: Buka stream.dart
 Tambahkan method berikut ini.
-
+```dart
+ addError() {
+    controller.sink.addError('error');
+  }
+```
 
 ### Langkah 14: Buka main.dart
 Tambahkan method onError di dalam class StreamHomePageState pada method listen di fungsi initState() seperti berikut ini.
-
+```dart
+Stream stream = numberStreamController.stream;
+    stream.listen(
+    (event) {
+      setState(() {
+        lastNumber = event;
+      });
+    },
+    onError: (error) {
+      setState(() {
+        lastNumber = -1;
+      });
+    }
+  );
+```
 ### Langkah 15: Edit method addRandomNumber()
 Lakukan comment pada dua baris kode berikut, lalu ketik kode seperti berikut ini.
-
+```dart
+  void addRandomNumber() {
+    Random random = Random();
+    //int myNum = random.nextInt(10);
+    //numberStream.addNumberToSink(myNum);
+    numberStream.addError();
+  }
+```
 #### Soal 7
 1. Jelaskan maksud kode langkah 13 sampai 15 tersebut!
+- Langkah 13 Stream.dart Menambahkan method addError() ke NumberStream. Method ini memungkinkan kita mengirimkan event berupa kesalahan ke dalam stream menggunakan controller.sink.addError('error'). <br>
+- Langkah 14	main.dart	Menambahkan callback .onError(error) pada stream.listen(). Ini adalah mekanisme penanganan kesalahan. Ketika event error diterima, callback ini dijalankan, dan lastNumber disetel menjadi -1, memberitahu pengguna bahwa terjadi kesalahan. <br>
+- Langkah 15	main.dart	Mengubah fungsionalitas tombol addRandomNumber() dari mengirim angka acak menjadi memicu error (numberStream.addError()). Ini adalah cara kita menguji mekanisme penanganan error yang telah disiapkan di Langkah 14.
+
 2. Kembalikan kode seperti semula pada Langkah 15, comment addError() agar Anda dapat melanjutkan ke praktikum 3 berikutnya.
+```dart
+  void addRandomNumber() {
+    Random random = Random();
+    int myNum = random.nextInt(10);
+    numberStream.addNumberToSink(myNum);
+    //numberStream.addError();
+  }
+```
 3. Lalu lakukan commit dengan pesan "W12: Jawaban Soal 7".
 
 
