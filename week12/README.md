@@ -119,8 +119,30 @@ class ColorStream {
 ```
 2. Lakukan commit hasil jawaban Soal 2 dengan pesan "W12: Jawaban Soal 2"
 
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
+### Langkah 5: Tambah method getColors()
+Di dalam class ColorStream ketik method seperti kode berikut. Perhatikan tanda bintang di akhir keyword async* (ini digunakan untuk melakukan Stream data)
+```dart
+Stream<Color> getColors() async* {
+    
+  }
+```
+
+### Langkah 6: Tambah perintah yield*
+Tambahkan kode berikut ini.
+```dart
+yield* Stream.periodic(
+  const Duration(seconds: 1), (int t) {
+    int index = t % colors.length;
+    return colors[index];
+});
+```
+#### Soal 3
+1. Jelaskan fungsi keyword yield* pada kode tersebut!
+<br> Fungsi utama dari keyword yield* (dibaca: yield star) dalam konteks fungsi generator asinkron (async*) adalah untuk mendelegasikan yield ke Stream lain.
+2. Apa maksud isi perintah kode tersebut?
+<br> Isi perintah kode ini bertujuan untuk membuat dan mengembalikan aliran (Stream) warna yang berulang secara periodik, mengubah warna setiap satu detik.
+
+3. Lakukan commit hasil jawaban Soal 3 dengan pesan "W12: Jawaban Soal 3"
 ### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart

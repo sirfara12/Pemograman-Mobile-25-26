@@ -13,4 +13,12 @@ class ColorStream {
     Colors.brown,        // Cokelat
     Colors.deepOrange,   // Oranye tua
   ];
+
+  Stream<Color> getColors() async* {
+    yield* Stream.periodic(
+      const Duration(seconds: 1), (int t) {
+        int index = t % colors.length;
+        return colors[index];
+    });
+  }
 }
