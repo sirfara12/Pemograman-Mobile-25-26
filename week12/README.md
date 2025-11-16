@@ -143,6 +143,78 @@ yield* Stream.periodic(
 <br> Isi perintah kode ini bertujuan untuk membuat dan mengembalikan aliran (Stream) warna yang berulang secara periodik, mengubah warna setiap satu detik.
 
 3. Lakukan commit hasil jawaban Soal 3 dengan pesan "W12: Jawaban Soal 3"
+
+### Langkah 7: Buka main.dart
+Ketik kode impor file ini pada file main.dart
+```dart
+import 'stream.dart';
+```
+Color bgColor = Colors.blueGrey;
+late ColorStream colorStream;
+### Langkah 8: Tambah variabel
+Ketik dua properti ini di dalam class _StreamHomePageState
+```dart
+Color bgColor = Colors.blueGrey;
+late ColorStream colorStream;
+```
+
+### Langkah 9 - Tambah method changeColor()
+```dart
+  void changeColor() async {
+    await for (var eventColor in colorStream.getColors()) {
+      setState(() {
+        bgColor = eventColor;
+      });
+    }
+  }
+```
+
+### Langkah 10 - Lakukan override initState()
+```dart
+  @override
+  void initState() {
+    super.initState();
+    colorStream = ColorStream();
+    changeColor();
+  }
+```
+### Langkah 11 - Ubah isi Scaffold()
+```dart
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text('Stream'),
+    ),
+    body: Container(
+      decoration: BoxDecoration(color: bgColor),
+    ),
+  );
+}
+```
+
+### Langkah 12: Run
+Lakukan running pada aplikasi Flutter Anda, maka akan terlihat berubah warna background setiap detik.
+
+#### Soal 4
+1. Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+![soal4](img/soal4.png) ![soal4](img/soal4.1.png)
+
+2. Lakukan commit hasil jawaban Soal 4 dengan pesan "W12: Jawaban Soal 4
+
+### Langkah 2: Buka file main.dart
+### Langkah 2: Buka file main.dart
+### Langkah 2: Buka file main.dart
+### Langkah 2: Buka file main.dart
+### Langkah 2: Buka file main.dart
+### Langkah 2: Buka file main.dart
+### Langkah 2: Buka file main.dart
+### Langkah 2: Buka file main.dart
+### Langkah 2: Buka file main.dart
+### Langkah 2: Buka file main.dart
+### Langkah 2: Buka file main.dart
+### Langkah 2: Buka file main.dart
+### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart
@@ -153,4 +225,3 @@ yield* Stream.periodic(
 
 
 
-![Langkah2](img/l2.png)
