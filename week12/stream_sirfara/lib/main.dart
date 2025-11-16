@@ -32,18 +32,21 @@ class _StreamHomePageState extends State<StreamHomePage> {
   late ColorStream colorStream;
   late StreamSubscription _colorSubscription;
 
-  int lastNumber = 0;
+  List<int> numberHistory = [];
   late StreamController numberStreamController;
   late NumberStream numberStream;
   late StreamTransformer transformer;
 
-  late StreamSubscription subscription; 
+  late StreamSubscription subscription;
+  late StreamSubscription subscription2;
+ 
+  int lastNumber = 0;
+  String values = '';
 
   @override
   void initState() {
     super.initState();
-    
-    // Inisialisasi ColorStream
+
     colorStream = ColorStream();
     _colorSubscription = colorStream.getColors().listen((eventColor) {
       setState(() {
@@ -51,11 +54,10 @@ class _StreamHomePageState extends State<StreamHomePage> {
       });
     });
 
-    // Inisialisasi NumberStream
     numberStream = NumberStream();
     numberStreamController = numberStream.controller;
-    
-    // Inisialisasi StreamTransformer
+    Stream stream = numberStreamController.stream.asBroadcastStream();
+
     transformer = StreamTransformer<int, int>.fromHandlers(
       handleData: (value, sink) {
         sink.add(value * 10);
@@ -65,29 +67,37 @@ class _StreamHomePageState extends State<StreamHomePage> {
       },
       handleDone: (sink) => sink.close(),
     );
-    
-    Stream stream = numberStreamController.stream;
+
     subscription = stream
-      .transform(transformer)
-      .listen(
-        (event) {
-          setState(() {
-            lastNumber = event;
-          });
-        },
-        onError: (error) { 
-          setState(() {
-            lastNumber = -1;
-          });
-        },
-      );
-      
+        .transform(transformer)
+        .listen(
+          (event) {
+            setState(() {
+              numberHistory.add(event); 
+              lastNumber = event;
+              values = 'First: $event';
+            });
+          },
+          onError: (error) {
+            setState(() {
+              numberHistory.add(-1);
+              lastNumber = -1;
+            });
+          },
+        );
+
+    subscription2 = stream.listen((event) {
+      setState(() {
+        values += ' Second: $event';
+      });
+    });
+
     subscription.onError((error) {
       setState(() {
         lastNumber = -1;
       });
     });
-    
+
     subscription.onDone(() {
       print("Stream has been called 'done'");
     });
@@ -102,7 +112,7 @@ class _StreamHomePageState extends State<StreamHomePage> {
   void addRandomNumber() {
     Random random = Random();
     int myNum = random.nextInt(10);
-    if (!numberStreamController.isClosed) { 
+    if (!numberStreamController.isClosed) {
       numberStream.addNumberToSink(myNum);
     } else {
       setState(() {
@@ -115,13 +125,15 @@ class _StreamHomePageState extends State<StreamHomePage> {
   void dispose() {
     numberStreamController.close();
     _colorSubscription.cancel();
-    subscription.cancel(); 
-
+    subscription.cancel();
+    subscription2.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    String displayHistory = numberHistory.map((n) => n.toString()).join('-');
+
     return Scaffold(
       appBar: AppBar(title: const Text('Stream')),
       body: Container(
@@ -131,17 +143,25 @@ class _StreamHomePageState extends State<StreamHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
+            
             children: <Widget>[
-              Text(
-                lastNumber.toString(),
-                style: const TextStyle(fontSize: 48, color: Colors.white),
+              Container(
+                padding: const EdgeInsets.all(16.0),
+                height: 150, 
+                width: double.infinity,
+                child: SingleChildScrollView(
+                  child: Text(
+                    displayHistory,
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ),
               ),
-              
+
               ElevatedButton(
                 onPressed: addRandomNumber,
                 child: const Text('New Random Number'),
               ),
-              
+
               ElevatedButton(
                 onPressed: stopStream,
                 child: const Text('Stop Subscription'),
