@@ -398,12 +398,65 @@ Lakukan comment pada dua baris kode berikut, lalu ketik kode seperti berikut ini
 ```
 3. Lalu lakukan commit dengan pesan "W12: Jawaban Soal 7".
 
+##  Praktikum 3: Injeksi data ke streams
+
+### Langkah 1: Buka main.dart
+Tambahkan variabel baru di dalam class _StreamHomePageState
+```dart
+  late StreamTransformer transformer;
+```
+
+### Langkah 2: Tambahkan kode ini di initState
+```dart
+ transformer = StreamTransformer<int, int>.fromHandlers(
+      handleData: (value, sink) {
+        sink.add(value * 10);
+      },
+      handleError: (error, trace, sink) {
+        sink.add(-1);
+      },
+      handleDone: (sink) => sink.close(),
+    );
+```
+### Langkah 3: Tetap di initState
+Lakukan edit seperti kode berikut.
+```dart
+    stream
+        .transform(transformer)
+        .listen(
+          (event) {
+            setState(() {
+              lastNumber = event;
+            });
+          },
+          onError: (error) {
+            setState(() {
+              lastNumber = -1;
+            });
+          },
+        );
+
+    super.initState();
+  }
+```
+
+### Langkah 4: Run
+Terakhir, run atau tekan F5 untuk melihat hasilnya jika memang belum running. Bisa juga lakukan hot restart jika aplikasi sudah running. Maka hasilnya akan seperti gambar berikut ini. Anda akan melihat tampilan angka dari 0 hingga 90.
+
+#### Soal 8
+1. Jelaskan maksud kode langkah 1-3 tersebut!
+- Langkah 1 menambhakan variabel transformer, variabel late StreamTransformer transformer; sebuah variabel yang akan menyimpan objek StreamTransformer. Objek ini bertanggung jawab untuk mengambil data berjenis int (<int, int>) dari stream dan mengeluarkan data berjenis int yang sudah dimodifikasi.
+- Langkah 2: Inisialisasi StreamTransformer
+handleData: (value, sink) { sink.add(value * 10); }: Ini adalah aturan utamanya. Setiap kali angka acak (value) dikirimkan ke stream (misalnya 5), transformer segera mengalikan nilai tersebut dengan 10 (menjadi 50) dan mengirimkannya ke langkah berikutnya (sink.add(50)).
+handleError: (error, trace, sink) { sink.add(-1); }: Ini adalah penanganan error di tingkat transformasi. Jika stream mengirimkan error, transformer akan mengubah error tersebut menjadi data normal (-1) dan mengirimkannya ke listener. Ini mencegah error mematikan stream secara langsung.
+
+- Langkah 3: Menggunakan transform(), stream.transform(transformer).listen(...): Baris ini menggantikan stream.listen(...) yang lama. Event apa pun yang keluar dari numberStreamController.stream wajib melalui transformer terlebih dahulu. Hanya data yang sudah diproses oleh transformer (yaitu, dikali 10 atau diubah menjadi -1) yang akan sampai ke listener UI (event) dan ditampilkan sebagai lastNumber.
+
+2. Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+![soal8](img/soal8.png)
+3. Lalu lakukan commit dengan pesan "W12: Jawaban Soal 8".
 
 
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart
