@@ -633,6 +633,140 @@ Tekan button ‘New Random Number' beberapa kali, maka akan tampil teks angka te
 3. Lalu lakukan commit dengan pesan "W12: Jawaban Soal 10,11".
 
 
+##  Praktikum 6: StreamBuilder
+
+### Langkah 1: Buat Project Baru
+Buatlah sebuah project flutter baru dengan nama streambuilder_nama (beri nama panggilan Anda) di folder week-12/src/ repository GitHub Anda.
+
+### Langkah 2: Buat file baru stream.dart
+Ketik kode ini
+```dart
+class NumberStream {}
+```
+### Langkah 3: Tetap di file stream.dart
+Ketik kode seperti berikut.
+```dart
+import 'dart:math';
+
+class NumberStream {
+  Stream<int> getNumbers() async* {
+    yield* Stream.periodic(const Duration(seconds: 1), (int t) {
+      Random random = Random();
+      int myNum = random.nextInt(10);
+      return myNum;
+    });
+  }
+}
+```
+### Langkah 4: Edit main.dart
+Ketik kode seperti berikut ini.
+```dart
+import 'package:flutter/material.dart';
+import 'stream.dart';
+import 'dart:async';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Stream',
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+      ),
+      home: const StreamHomePage(),
+    );
+  }
+}
+
+class StreamHomePage extends StatefulWidget {
+  const StreamHomePage({super.key});
+
+  @override
+  State<StreamHomePage> createState() => _StreamHomePageState();
+}
+
+class _StreamHomePageState extends State<StreamHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Stream'),
+      ),
+      body: Container(
+      ),
+    );
+  }
+}
+```
+
+### Langkah 5: Tambah variabel
+Di dalam class _StreamHomePageState, ketika variabel ini.
+```dart
+  late Stream<int> numberStream;
+```
+### Langkah 6: Edit initState()
+Ketik kode seperti berikut.
+```dart
+  @override
+  void initState() {
+    numberStream = NumberStream().getNumbers();
+    super.initState();
+  }
+```
+### Langkah 7: Edit method build()
+```dart
+ Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Stream'),
+      ),
+      body: StreamBuilder<int>(
+        stream: numberStream,
+        initialData: 0,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            print('Error!');
+            return const Center(child: Text('Terjadi Kesalahan'));
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasData) {
+            return Center(
+              child: Text(
+                snapshot.data.toString(),
+                style: const TextStyle(fontSize: 96),
+              ),
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
+        },
+      ),
+    );
+  }
+}
+```
+### Langkah 8: Run
+Hasilnya, setiap detik akan tampil angka baru seperti berikut.
+
+#### Soal 12
+1. Jelaskan maksud kode pada langkah 3 dan 7 !
+2. Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+![soal12](img/soal12.png)
+
+3. Lalu lakukan commit dengan pesan "W12: Jawaban Soal 12".
+
+### Langkah 2: Buka file main.dart
+### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart
 ### Langkah 2: Buka file main.dart
