@@ -1,4 +1,17 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+
+class NumberStream {
+  final StreamController<int> controller = StreamController<int>();
+
+  void addNumberToSink(int newNumber) {
+    controller.sink.add(newNumber);
+  }
+
+  void close() {
+    controller.close();
+  }
+}
 
 class ColorStream {
   final List<Color> colors = [
@@ -7,11 +20,11 @@ class ColorStream {
     Colors.deepPurple,
     Colors.lightBlue,
     Colors.teal,
-    Colors.pinkAccent,   // Warna pink yang lebih cerah
-    Colors.lime,         // Hijau kekuningan
-    Colors.cyan,         // Biru kehijauan
-    Colors.brown,        // Cokelat
-    Colors.deepOrange,   // Oranye tua
+    Colors.pinkAccent,
+    Colors.lime,
+    Colors.cyan,
+    Colors.brown,
+    Colors.deepOrange,
   ];
 
   Stream<Color> getColors() async* {
