@@ -169,36 +169,87 @@ Kita ingin mengubah data json tersebut dari String menjadi objek List. Maka perl
 
 ### Langkah 12: Model pizza.dart
 Ketik kode berikut pada file pizza.dart
-
+```dart
+class Pizza {
+  final int id;
+  final String pizzaName;
+  final String description;
+  final double price;
+  final String imageUrl;
+```
 
 ### Langkah 13: Buat constructor()
 Di dalam class Pizza definisikan constructor fromJson, yang mana akan mengambil data berupa Map sebagai parameter dan mengubah Map ke objek Pizza seperti kode berikut:
-
+```dart
+factory Pizza.fromJson(Map<String, dynamic> json) {
+    return Pizza(
+      id: json['id'],
+      pizzaName: json['pizzaName'],
+      description: json['description'],
+      price: json['price'].toDouble(),
+      imageUrl: json['imageUrl'],
+    );
+  }
+```
 ### Langkah 14: Pindah ke class _MyHomePageState
 Tambahkan kode jsonDecode seperti berikut.
+```dart
+Future<void> readJsonFile() async {
+    String jsonString = await rootBundle.loadString('assets/pizzalist.json');
+    List<dynamic> rawList = jsonDecode(jsonString);
 
+    setState(() {
+      pizzaList = rawList.map((item) => Pizza.fromJson(item)).toList();
+    });
+  }
+```
 ### Langkah 15: Pastikan impor class
 Perhatikan pada bagian atas file bahwa telah berhasil impor kedua file berikut.
-
+```dart
+import 'dart:convert';
+import 'pizza.dart';
+```
 
 ### Langkah 16: Konversi List Map ke List Objek Dart
 Di dalam method readJsonFile(), setelah baris List pizzaMapList = jsonDecode(myString);, tambahkan kode berikut untuk mengonversi setiap Map di pizzaMapList menjadi objek Pizza dan menyimpannya ke myPizzas.
-
+```dart
+List<Pizza> myPizzas = [];
+for (var pizza in pizzaMapList) {
+  Pizza myPizza = Pizza.fromJson(pizza);
+  myPizzas.add(myPizza);
+}
+```
 
 ### Langkah 17: return myPizzas
 Hapus atau komentari setState yang menampilkan pizzaString dari Langkah 7. Kemudian, kembalikan myPizzas.
-
+```dart
+return myPizza;
+```
 
 ### Langkah 18: Perbarui Signature Method
 Perbarui signature method readJsonFile() untuk secara eksplisit menunjukkan bahwa ia mengembalikan Future yang berisi List.
-
-
+```dart
+Future<list<Pizza>> readJsonFile() async {
+```
 ### Langkah 19: Deklarasikan Variabel State
 Di dalam class _MyHomePageState, deklarasikan variabel state baru untuk menampung List objek Pizza.
+```dart
+List<Pizza> myPizza = [];
+```
 
 ### Langkah 20: Panggil di initState dan Perbarui State
 Perbarui method initState() di _MyHomePageState untuk memanggil readJsonFile(). Karena readJsonFile() mengembalikan Future, gunakan .then() untuk mendapatkan hasilnya, dan perbarui state myPizzas.
-
+```dart
+@override
+  void initState() {
+    super.initState();
+    readJsonFile().then((value) {
+      setState(() {
+        myPizzas = value;
+      });
+    });
+  }
+```
 
 ### Langkah 21: Tampilkan Data di ListView
 Perbarui body dari Scaffold untuk menggunakan ListView.builder yang menampilkan pizzaName sebagai judul dan description sebagai subjudul dari setiap objek Pizza.
@@ -216,9 +267,10 @@ body: ListView.builder(
 ```
 ### Langkah 22: Run
 Jalankan aplikasi. Sekarang, Anda akan melihat data pizza ditampilkan dalam daftar yang lebih terstruktur sebagai objek List Dart.
-
 #### Soal 3
 1. Masukkan hasil capture layar ke laporan praktikum Anda.
+![soal3](img/soa;3.png)
+
 2. Lakukan commit hasil jawaban Soal 2 dengan pesan "W13: Jawaban Soal 3"
 
 ### Langkah 23: Tambahkan Method toJson() (Serialization)

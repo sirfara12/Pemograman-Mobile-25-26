@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert';
+import 'pizza.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,33 +34,43 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String pizzaString = '';
+  List<Pizza> myPizzas = [];
 
-  Future readJsonFile() async {
+  Future<List<Pizza>> readJsonFile() async {
+
     String myString = await rootBundle.loadString('assets/pizzalist.json');
-    setState(() {
-      pizzaString = myString;
-    });
+    List<dynamic> listMap = jsonDecode(myString);
+
+    List<Pizza> tempPizzas = [];
+    for (var p in listMap) {
+      tempPizzas.add(Pizza.fromJson(p));
+    }
+    return tempPizzas;
   }
 
   @override
   void initState() {
     super.initState();
-    readJsonFile();
+    readJsonFile().then((value) {
+      setState(() {
+        myPizzas = value;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('JSON')),
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            pizzaString,
-            style: const TextStyle(fontFamily: 'monospace'),
-          ),
-        ),
+      body: ListView.builder(
+        itemCount: myPizzas.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(myPizzas[index].pizzaName),
+            subtitle: Text(myPizzas[index].description),
+            trailing: Text(myPizzas[index].price.toString()),
+          );
+        },
       ),
     );
   }
