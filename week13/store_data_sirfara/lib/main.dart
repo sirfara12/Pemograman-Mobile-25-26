@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +13,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter JSON Demo Sirfara',
       theme: ThemeData(
-        primarySwatch: Colors.pink,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.pink),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.pink,
+          foregroundColor: Colors.white,
+        ),
       ),
       home: const MyHomePage(),
     );
@@ -27,11 +32,34 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String pizzaString = '';
+
+  Future readJsonFile() async {
+    String myString = await rootBundle.loadString('assets/pizzalist.json');
+    setState(() {
+      pizzaString = myString;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    readJsonFile();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('JSON')),
-      body: Container(),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            pizzaString,
+            style: const TextStyle(fontFamily: 'monospace'),
+          ),
+        ),
+      ),
     );
   }
 }
