@@ -770,23 +770,39 @@ String myPass = '';
 ```
 ### Langkah 4: Inisialisasi Secure Storage
 Di State class, inisialisasi FlutterSecureStorage dan tentukan kuncinya.
-
+```dart
+ final storage = const FlutterSecureStorage();
+  final myKey = 'myPass';
+```
 
 
 ### Langkah 5: Buat Method writeToSecureStorage()
 Buat method asinkron untuk menulis data dari pwdController ke secure storage.
-
+```dart
+Future<void> writeToSecureStorage() async {
+    await storage.write(
+      key: "myKey",
+      value: dataController.text,
+    );
+  }
+```
 
 
 ### Langkah 6: Buat Method readFromSecureStorage()
 Buat method asinkron untuk membaca data dari secure storage.
-
+```dart
+Future<void> readFromSecureStorage() async {
+    String? value = await storage.read(key: "myKey");
+    setState(() {
+      savedValue = value ?? "Belum ada data";
+    });
+  }
+```
 
 
 ### Langkah 7: Edit build() untuk UI dan Logic
 Perbarui method build() untuk menyertakan TextField dan dua ElevatedButton (Save Value dan Read Value). Hubungkan method save ke tombol Save Value.
 ```dart
-// Di dalam body: Column children:
 TextField(
   controller: pwdController,
 ),
@@ -796,14 +812,21 @@ ElevatedButton(child: const Text('Save Value'), onPressed: () {
 ```
 ### Langkah 8: Hubungkan Read ke Tombol
 Hubungkan method read ke tombol Read Value, perbarui myPass dan UI melalui setState().
-
+```dart
+ElevatedButton(
+                  onPressed: () {
+                    readFromSecureStorage();
+                  },
+                  child: Text("Read Value"),
+                ),
+```
 
 ### Langkah 9: Run
 Jalankan aplikasi. Masukkan teks, simpan, lalu baca kembali. Teks tersebut seharusnya ditampilkan, menandakan data telah disimpan dan diambil dengan aman.
 
-
-
 #### Soal 9
 1. Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+![soal8](img/image.png)
+
 2. Lalu lakukan commit dengan pesan "W13: Jawaban Soal 9".
 

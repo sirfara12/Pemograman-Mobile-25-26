@@ -1,6 +1,5 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,88 +9,98 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: PathProviderExample(),
+      home: SecureStorageUIExample(),
     );
   }
 }
 
-class PathProviderExample extends StatefulWidget {
+class SecureStorageUIExample extends StatefulWidget {
   @override
-  _PathProviderExampleState createState() => _PathProviderExampleState();
+  _SecureStorageUIExampleState createState() => _SecureStorageUIExampleState();
 }
 
-class _PathProviderExampleState extends State<PathProviderExample> {
-  late File myFile;
-  String fileContent = "";
+class _SecureStorageUIExampleState extends State<SecureStorageUIExample> {
+  final storage = const FlutterSecureStorage();
+  final TextEditingController controller = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    initFile();
+  String readValue = "";
+
+  Future<void> saveValue() async {
+    await storage.write(key: "secret", value: controller.text);
   }
 
-  Future<void> initFile() async {
-    try {
-      Directory dir = await getApplicationDocumentsDirectory();
-      String fullPath = "${dir.path}/mydata.txt";
-      myFile = File(fullPath);
-
-      // Tulis isi file
-      await writeFile();
-    } catch (e) {
-      print("Error init file: $e");
-    }
-  }
-
-  Future<bool> writeFile() async {
-    try {
-      await myFile.writeAsString("Sirfaratih, 2341720072");
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  Future<void> readFile() async {
-    try {
-      String text = await myFile.readAsString();
-      setState(() {
-        fileContent = text;
-      });
-    } catch (e) {
-      setState(() {
-        fileContent = "Gagal membaca file!";
-      });
-    }
+  Future<void> readStoredValue() async {
+    String? value = await storage.read(key: "secret");
+    setState(() {
+      readValue = value ?? "";
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    const pink = Colors.pink;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Path Provider"),
-        backgroundColor: Colors.pink,       // **WARNA PINK**
+        backgroundColor: pink,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(height: 30),
+        child: Column(
+          children: [
+            SizedBox(height: 10),
 
-              ElevatedButton(
-                onPressed: readFile,
-                child: Text("Read File"),
+            TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                labelText: "Masukkan data",
+                labelStyle: TextStyle(color: pink),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: pink, width: 2),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: pink),
+                ),
+                border: OutlineInputBorder(),
               ),
+            ),
 
-              SizedBox(height: 40),
+            SizedBox(height: 20),
 
-              Text(
-                fileContent,
-                style: TextStyle(fontSize: 18),
+            Container(
+              width: double.infinity,
+              height: 2,
+              color: pink,
+            ),
+
+            SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: pink,
+                foregroundColor: Colors.white,
               ),
-            ],
-          ),
+              onPressed: saveValue,
+              child: Text("Save Value"),
+            ),
+
+            SizedBox(height: 10),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: pink,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: readStoredValue,
+              child: Text("Read Value"),
+            ),
+
+            SizedBox(height: 20),
+
+            Text(
+              readValue,
+              style: TextStyle(fontSize: 18, color: pink),
+            ),
+          ],
         ),
       ),
     );
