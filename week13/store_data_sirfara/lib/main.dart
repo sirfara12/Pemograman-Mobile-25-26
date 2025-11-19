@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'pizza.dart';
 
@@ -34,29 +35,44 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int appCounter = 0;
   List<Pizza> myPizzas = [];
+
   String convertToJSON(List<Pizza> pizzas) {
     return jsonEncode(pizzas.map((pizza) => pizza.toJson()).toList());
   }
 
   Future<List<Pizza>> readJsonFile() async {
     String myString = await rootBundle.loadString('assets/pizzalist.json');
-
     List<dynamic> listMap = jsonDecode(myString);
 
     List<Pizza> tempPizzas = [];
     for (var p in listMap) {
       tempPizzas.add(Pizza.fromJson(p));
     }
-    String json = convertToJSON(tempPizzas);
-    print(json);
 
     return tempPizzas;
+  }
+
+  Future readAndWritePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    appCounter = prefs.getInt('appCounter') ?? 0;
+    appCounter++;
+    await prefs.setInt('appCounter', appCounter);
+    setState(() {});
+  }
+  Future deletePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    setState(() {
+      appCounter = 0;
+    });
   }
 
   @override
   void initState() {
     super.initState();
+    readAndWritePreference();
     readJsonFile().then((value) {
       setState(() {
         myPizzas = value;
@@ -67,17 +83,25 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('JSON')),
-      body: ListView.builder(
-        itemCount: myPizzas.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(myPizzas[index].pizzaName),
-            subtitle: Text(myPizzas[index].description),
-            trailing: Text(myPizzas[index].price.toString()),
-          );
-        },
+      appBar: AppBar(
+        title: Text('Shared Preferences Fara'),
       ),
+      body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Text(
+            'You have opened the app $appCounter times.',
+          ),
+          ElevatedButton(
+              onPressed: () {
+                  deletePreference();
+              },
+              child: Text('Reset counter'),
+          ),
+        ],
+      ),
+    ),
     );
   }
 }
