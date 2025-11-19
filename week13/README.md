@@ -742,9 +742,12 @@ Di method build(), tambahkan ElevatedButton yang memanggil readFile() dan Text y
 Jalankan aplikasi. Setelah menekan tombol 'Read File', konten yang ditulis (Margherita, Capricciosa, Napoli) akan ditampilkan atau sesuai nama dan NIM Anda.
 
 #### Soal 8
-1. Jelaskan maksud kode pada langkah 3 dan 7 !
+1. Jelaskan maksud kode pada langkah 3 dan 7 ! <br> 
+- Langkah 3 membuat method writeFile() untuk menuliskan data ke dalam file pada direktori aplikasi. Penulisan dilakukan secara asynchronous menggunakan writeAsString(). Method mengembalikan true jika berhasil dan false jika terjadi kesalahan. Fungsinya adalah memastikan data dapat disimpan dengan aman ke dalam file.
+- Langkah 7 menjalankan aplikasi untuk menguji fungsi penulisan dan pembacaan file. Saat aplikasi aktif, initState() memanggil writeFile() untuk membuat dan menyimpan file, kemudian data dapat dibaca kembali melalui tombol yang memanggil readFile(). Langkah ini memverifikasi bahwa seluruh proses bekerja dengan benar. 
+
 2. Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
-![soal7](img/soal6.png)
+![soal8](img/soal8.png)
 3. Lalu lakukan commit dengan pesan "W13: Jawaban Soal 8".
 
 
