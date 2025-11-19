@@ -575,6 +575,232 @@ Jalankan aplikasi. Tombol reset sekarang akan berfungsi, menghapus semua pasanga
 ![soal6](img/soal6.png)
 
 2. Lalu lakukan commit dengan pesan "W13: Jawaban Soal 6".
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
-### Langkah 2: Buka file main.dart
+
+
+## Praktikum 5: Akses filesystem dengan path_provider
+
+### Langkah 1: Tambahkan Dependensi
+Tambahkan package path_provider melalui Terminal.
+
+### Langkah 2: Lakukan Import
+Di file main.dart, tambahkan import untuk path_provider.
+```dart
+import 'package:path_provider/path_provider.dart';
+
+```
+### Langkah 3: Tambahkan Variabel Path State
+Di State class Anda, tambahkan variabel untuk menyimpan jalur direktori dokumen dan temporer.
+```dart
+String documentsPath = '';
+  String tempPath = '';
+```
+
+### Langkah 4: Buat Method getPaths()
+Buat method asinkron getPaths() yang menggunakan getApplicationDocumentsDirectory() dan getTemporaryDirectory() untuk mengambil jalur sistem file yang tepat, lalu perbarui state.
+```dart
+Future getPaths() async {
+    final docDir = await getApplicationDocumentsDirectory();
+    final tempDir = await getTemporaryDirectory();
+
+    setState(() {
+      documentsPath = docDir.path;
+      tempPath = tempDir.path;
+    });
+  }
+```
+### Langkah 5: Panggil getPaths() di initState()
+Panggil getPaths() di initState().
+```dart
+@override
+void initState() {
+  super.initState();
+  getPaths();
+}
+```
+
+### Langkah 6: Perbarui Tampilan
+Perbarui body Scaffold untuk menampilkan kedua jalur yang telah diambil.
+```dart
+body: Column( 
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Text(
+            'You have opened the app $appCounter times.',
+          ),
+          ElevatedButton(
+            onPressed: () {
+              deletePreference();
+            },
+            child: const Text('Reset counter'),
+          ),
+          
+          const Divider(), 
+          Text('Doc path: $documentsPath'),
+          Text('Temp path: $tempPath'),
+        ],
+      ),
+```
+
+
+### Langkah 7: Run
+Jalankan aplikasi. Anda akan melihat path absolut ke direktori dokumen dan cache aplikasi di perangkat Anda.
+
+#### Soal 7
+1. Capture hasil praktikum Anda dan lampirkan di README.
+![soal7](img/soal7.png)
+
+2. Lalu lakukan commit dengan pesan "W13: Jawaban Soal 7".
+
+
+##  Praktikum 6: Akses filesystem dengan direktori
+### Langkah 1: Lakukan Import dart:io
+Di file main.dart, tambahkan import untuk pustaka dart:io.
+
+### Langkah 2: Tambahkan Variabel File dan Text
+Di State class, tambahkan variabel myFile (dengan modifier late) dan fileText untuk menyimpan konten yang akan dibaca.
+```dart
+late File myFile;
+String fileText='';
+```
+
+### Langkah 3: Buat Method writeFile()
+Buat method asinkron writeFile() yang menggunakan myFile.writeAsString() untuk menulis konten ke file. Kata ‘Margherita, Capricciosa, Napoli' silakan Anda ganti dengan Nama Lengkap dan NIM Anda.
+```dart
+Future<bool> writeFile() async {
+  try {
+    await myFile.writeAsString('Margherita, Capricciosa, Napoli');
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+```
+### Langkah 4: Inisialisasi File dan Panggil writeFile() di initState()
+Perbarui initState(): setelah getPaths() selesai, inisialisasi myFile dengan jalur lengkap di direktori dokumen, dan panggil writeFile().
+```dart
+  @override
+  void initState() {
+    super.initState();
+
+    readAndWritePreference();
+
+    readJsonFile().then((value) {
+      setState(() {
+        myPizzas = value;
+      });
+    });
+
+    getPaths().then((_) {
+      myFile = File("$documentsPath/pizza.txt");
+      writeFile();
+    });
+  }
+```
+
+
+### Langkah 5: Buat Method readFile()
+Buat method asinkron readFile() yang menggunakan myFile.readAsString() untuk membaca konten file dan memperbarui fileText melalui setState().
+```dart
+  Future<bool> readFile() async {
+    try {
+      String text = await myFile.readAsString();
+      setState(() {
+        fileText = text;
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+```
+
+
+### Langkah 6: Edit build() dan Tambahkan Tombol Baca
+Di method build(), tambahkan ElevatedButton yang memanggil readFile() dan Text yang menampilkan fileText di bawahnya.
+```dart
+ Text('Doc path: $documentsPath'),
+            Text('Temp path: $tempPath'),
+
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                readFile();
+              },
+              child: const Text("Baca File"),
+            ),
+
+            const SizedBox(height: 10),
+            Text("Isi File:", style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(fileText),
+          ],
+```
+
+
+
+
+### Langkah 7: Run
+Jalankan aplikasi. Setelah menekan tombol 'Read File', konten yang ditulis (Margherita, Capricciosa, Napoli) akan ditampilkan atau sesuai nama dan NIM Anda.
+
+#### Soal 8
+1. Jelaskan maksud kode pada langkah 3 dan 7 !
+2. Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+![soal7](img/soal6.png)
+3. Lalu lakukan commit dengan pesan "W13: Jawaban Soal 8".
+
+
+## Praktikum 7: Menyimpan data dengan enkripsi/dekripsi
+
+### Langkah 1: Tambahkan Dependensi
+Tambahkan package flutter_secure_storage melalui Terminal.
+
+### Langkah 2: Lakukan Import
+Di main.dart, impor package yang diperlukan.
+```dart
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+```
+
+### Langkah 3: Tambahkan Variabel dan Controller
+Di State class (_MyHomePageState), tambahkan TextEditingController dan variabel untuk menyimpan kata sandi yang dibaca.
+```dart
+final pwdController = TextEditingController();
+String myPass = '';
+```
+### Langkah 4: Inisialisasi Secure Storage
+Di State class, inisialisasi FlutterSecureStorage dan tentukan kuncinya.
+
+
+
+### Langkah 5: Buat Method writeToSecureStorage()
+Buat method asinkron untuk menulis data dari pwdController ke secure storage.
+
+
+
+### Langkah 6: Buat Method readFromSecureStorage()
+Buat method asinkron untuk membaca data dari secure storage.
+
+
+
+### Langkah 7: Edit build() untuk UI dan Logic
+Perbarui method build() untuk menyertakan TextField dan dua ElevatedButton (Save Value dan Read Value). Hubungkan method save ke tombol Save Value.
+```dart
+// Di dalam body: Column children:
+TextField(
+  controller: pwdController,
+),
+ElevatedButton(child: const Text('Save Value'), onPressed: () {
+  writeToSecureStorage();
+}),
+```
+### Langkah 8: Hubungkan Read ke Tombol
+Hubungkan method read ke tombol Read Value, perbarui myPass dan UI melalui setState().
+
+
+### Langkah 9: Run
+Jalankan aplikasi. Masukkan teks, simpan, lalu baca kembali. Teks tersebut seharusnya ditampilkan, menandakan data telah disimpan dan diambil dengan aman.
+
+
+
+#### Soal 9
+1. Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+2. Lalu lakukan commit dengan pesan "W13: Jawaban Soal 9".
+

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-import 'pizza.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 void main() {
   runApp(const MyApp());
@@ -14,14 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter JSON Demo Sirfara',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.pink),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.pink,
-          foregroundColor: Colors.white,
-        ),
-      ),
+      title: 'Path Provider',
       home: const MyHomePage(),
     );
   }
@@ -35,73 +26,42 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int appCounter = 0;
-  List<Pizza> myPizzas = [];
+  String documentsPath = '';
+  String tempPath = '';
 
-  String convertToJSON(List<Pizza> pizzas) {
-    return jsonEncode(pizzas.map((pizza) => pizza.toJson()).toList());
-  }
+  Future<void> getPaths() async {
+    final docDir = await getApplicationDocumentsDirectory();
+    final tempDir = await getTemporaryDirectory();
 
-  Future<List<Pizza>> readJsonFile() async {
-    String myString = await rootBundle.loadString('assets/pizzalist.json');
-    List<dynamic> listMap = jsonDecode(myString);
-
-    List<Pizza> tempPizzas = [];
-    for (var p in listMap) {
-      tempPizzas.add(Pizza.fromJson(p));
-    }
-
-    return tempPizzas;
-  }
-
-  Future readAndWritePreference() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    appCounter = prefs.getInt('appCounter') ?? 0;
-    appCounter++;
-    await prefs.setInt('appCounter', appCounter);
-    setState(() {});
-  }
-  Future deletePreference() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
     setState(() {
-      appCounter = 0;
+      documentsPath = docDir.path;
+      tempPath = tempDir.path;
     });
   }
 
   @override
   void initState() {
     super.initState();
-    readAndWritePreference();
-    readJsonFile().then((value) {
-      setState(() {
-        myPizzas = value;
-      });
-    });
+    getPaths();  
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Shared Preferences Fara'),
+        title: const Text("Path Provider"),
       ),
-      body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text(
-            'You have opened the app $appCounter times.',
-          ),
-          ElevatedButton(
-              onPressed: () {
-                  deletePreference();
-              },
-              child: Text('Reset counter'),
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Doc path: $documentsPath"),
+            const SizedBox(height: 30),
+            Text("Temp path: $tempPath"),
+          ],
+        ),
       ),
-    ),
     );
   }
 }
