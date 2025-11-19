@@ -5,6 +5,12 @@ class Pizza {
   final double price;
   final String imageUrl;
 
+  static const keyId = 'id';
+  static const keyName = 'pizzaName';
+  static const keyDescription = 'description';
+  static const keyPrice = 'price';
+  static const keyImageUrl = 'imageUrl';
+
   Pizza({
     required this.id,
     required this.pizzaName,
@@ -13,34 +19,23 @@ class Pizza {
     required this.imageUrl,
   });
 
-  /*factory Pizza.fromJson(Map<String, dynamic> json) {
-    return Pizza(
-      id: json['id'],
-      pizzaName: json['pizzaName'],
-      description: json['description'],
-      price: json['price'].toDouble(),
-      imageUrl: json['imageUrl'],
-    );
-  }*/
-
   factory Pizza.fromJson(Map<String, dynamic> json) {
     return Pizza(
-      id: int.tryParse(json['id'].toString()) ?? 0,
-      pizzaName: json['pizzaName']?.toString() ?? '',
-      description: json['description']?.toString() ?? '',
-      price: double.tryParse(json['price'].toString()) ?? 0.0,
-      imageUrl: json['imageUrl']?.toString() ?? '',
+      id: int.tryParse(json[keyId].toString()) ?? 0,
+      pizzaName: json[keyName]?.toString() ?? 'No name',
+      description: json[keyDescription]?.toString() ?? '',
+      price: double.tryParse(json[keyPrice].toString()) ?? 0.0,
+      imageUrl: json[keyImageUrl]?.toString() ?? '',
     );
-}
-    Map<String, dynamic> toJson() {
+  }
+
+  Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'pizzaName': pizzaName,
-      'description': description,
-      'price': price,
-      'imageUrl': imageUrl,
+      keyId: id,
+      keyName: pizzaName,
+      keyDescription: description,
+      keyPrice: price,
+      keyImageUrl: imageUrl,
     };
   }
-  
-
 }

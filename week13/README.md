@@ -382,22 +382,53 @@ Jalankan aplikasi. Sekarang data yang tidak konsisten telah ditangani dengan bai
 
 ## Praktikum 3: Menangani error JSON
 
-
 ### Langkah 1: Buka pizza.dart dan Buat Konstanta
-
+```dart
+static const keyId = 'id';
+  static const keyName = 'pizzaName';
+  static const keyDescription = 'description';
+  static const keyPrice = 'price';
+  static const keyImageUrl = 'imageUrl';
+```
 ### Langkah 2: Perbarui fromJson() menggunakan Konstanta
 Di constructor Pizza.fromJson, ganti semua string literal kunci JSON (misalnya 'id') dengan konstanta yang sesuai (keyId).
-
+```dart
+factory Pizza.fromJson(Map<String, dynamic> json) {
+    return Pizza(
+      id: int.tryParse(json[keyId].toString()) ?? 0,
+      pizzaName: json[keyName]?.toString() ?? 'No name',
+      description: json[keyDescription]?.toString() ?? '',
+      price: double.tryParse(json[keyPrice].toString()) ?? 0.0,
+      imageUrl: json[keyImageUrl]?.toString() ?? '',
+    );
+  }
+```
 
 ### Langkah 3: Perbarui toJson() menggunakan Konstanta
 Perbarui juga method toJson() agar menggunakan konstanta yang sama.
-
+```dart
+ Map<String, dynamic> toJson() {
+    return {
+      keyId: id,
+      keyName: pizzaName,
+      keyDescription: description,
+      keyPrice: price,
+      keyImageUrl: imageUrl,
+    };
+  }
+```
 ### Langkah 4: Run
 Jalankan aplikasi. Tidak akan ada perubahan visual, tetapi kode Anda kini lebih safe dan maintainable.
 
 #### Soal 5
-1. Jelaskan maksud kode lebih safe dan maintainable!
+1. Jelaskan maksud kode lebih safe dan maintainable! <br> Safe :
+Kode lebih aman karena dapat menangani data JSON yang tidak konsisten menggunakan tryParse(), menghindari error akibat nilai null dengan ?. dan ??, serta mencegah salah penulisan key dengan penggunaan konstanta. <br>
+
+Maintainable:
+Kode lebih mudah dikelola karena semua key JSON tersentralisasi dalam bentuk konstanta, sehingga perubahan cukup dilakukan di satu tempat. Selain itu, struktur kode lebih rapi, konsisten, dan mengurangi duplikasi sehingga meminimalkan kesalahan.
+
 2. Capture hasil praktikum Anda dan lampirkan di README.
+![prak](img/langkah11.png)
 3. Lalu lakukan commit dengan pesan "W13: Jawaban Soal 5".
 
 
