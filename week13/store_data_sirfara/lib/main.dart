@@ -35,16 +35,22 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Pizza> myPizzas = [];
+  String convertToJSON(List<Pizza> pizzas) {
+    return jsonEncode(pizzas.map((pizza) => pizza.toJson()).toList());
+  }
 
   Future<List<Pizza>> readJsonFile() async {
-
     String myString = await rootBundle.loadString('assets/pizzalist.json');
+
     List<dynamic> listMap = jsonDecode(myString);
 
     List<Pizza> tempPizzas = [];
     for (var p in listMap) {
       tempPizzas.add(Pizza.fromJson(p));
     }
+    String json = convertToJSON(tempPizzas);
+    print(json);
+
     return tempPizzas;
   }
 
