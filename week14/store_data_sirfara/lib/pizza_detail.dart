@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'pizza.dart';
+import '/pizza.dart';
 import 'httphelper.dart';
 
 class PizzaDetailScreen extends StatefulWidget {
   final Pizza pizza;
   final bool isNew;
-
   const PizzaDetailScreen({
     super.key,
     required this.pizza,
@@ -29,12 +28,72 @@ class _PizzaDetailScreenState extends State<PizzaDetailScreen> {
   void initState() {
     if (!widget.isNew) {
       txtId.text = widget.pizza.id.toString();
-      txtName.text = widget.pizza.pizzaName ?? "";
-      txtDescription.text = widget.pizza.description ?? "";
+      txtName.text = widget.pizza.pizzaName;
+      txtDescription.text = widget.pizza.description;
       txtPrice.text = widget.pizza.price.toString();
-      txtImageUrl.text = widget.pizza.imageUrl ?? "";
+      txtImageUrl.text = widget.pizza.imageUrl;
     }
     super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(widget.isNew ? 'Add Pizza' : 'Edit Pizza')),
+      body: Padding(
+        padding: const EdgeInsets.all(12),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text(
+                operationResult,
+                style: TextStyle(
+                  backgroundColor: Colors.green[200],
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 24),
+              TextField(
+                controller: txtId,
+                decoration: const InputDecoration(hintText: 'Insert ID'),
+                readOnly: !widget.isNew,
+              ),
+              const SizedBox(height: 24),
+              TextField(
+                controller: txtName,
+                decoration: const InputDecoration(
+                  hintText: 'Insert Pizza Name',
+                ),
+              ),
+              const SizedBox(height: 24),
+              TextField(
+                controller: txtDescription,
+                decoration: const InputDecoration(
+                  hintText: 'Insert Description',
+                ),
+              ),
+              const SizedBox(height: 24),
+              TextField(
+                controller: txtPrice,
+                decoration: const InputDecoration(hintText: 'Insert Price'),
+              ),
+              const SizedBox(height: 24),
+              TextField(
+                controller: txtImageUrl,
+                decoration: const InputDecoration(hintText: 'Insert Image Url'),
+              ),
+              const SizedBox(height: 48),
+              ElevatedButton(
+                child: Text(widget.isNew ? 'Send Post' : 'Update Pizza'),
+                onPressed: () {
+                  savePizza();
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -49,13 +108,13 @@ class _PizzaDetailScreenState extends State<PizzaDetailScreen> {
 
   Future savePizza() async {
     HttpHelper helper = HttpHelper();
-    Pizza pizza = Pizza();
-
-    pizza.id = int.tryParse(txtId.text);
-    pizza.pizzaName = txtName.text;
-    pizza.description = txtDescription.text;
-    pizza.price = double.tryParse(txtPrice.text);
-    pizza.imageUrl = txtImageUrl.text;
+    Pizza pizza = Pizza.fromJson({
+      'id': int.tryParse(txtId.text),
+      'pizzaName': txtName.text,
+      'description': txtDescription.text,
+      'price': double.tryParse(txtPrice.text),
+      'imageUrl': txtImageUrl.text,
+    });
 
     final result = await (widget.isNew
         ? helper.postPizza(pizza)
@@ -64,69 +123,5 @@ class _PizzaDetailScreenState extends State<PizzaDetailScreen> {
     setState(() {
       operationResult = result;
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Pizza Detail')),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Text(
-                operationResult,
-                style: TextStyle(
-                  backgroundColor: Colors.green[200],
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 24),
-
-              TextField(
-                controller: txtId,
-                decoration: const InputDecoration(hintText: 'Insert ID'),
-              ),
-              const SizedBox(height: 24),
-
-              TextField(
-                controller: txtName,
-                decoration:
-                    const InputDecoration(hintText: 'Insert Pizza Name'),
-              ),
-              const SizedBox(height: 24),
-
-              TextField(
-                controller: txtDescription,
-                decoration:
-                    const InputDecoration(hintText: 'Insert Description'),
-              ),
-              const SizedBox(height: 24),
-
-              TextField(
-                controller: txtPrice,
-                decoration: const InputDecoration(hintText: 'Insert Price'),
-              ),
-              const SizedBox(height: 24),
-
-              TextField(
-                controller: txtImageUrl,
-                decoration:
-                    const InputDecoration(hintText: 'Insert Image Url'),
-              ),
-              const SizedBox(height: 48),
-
-              ElevatedButton(
-                child: const Text("Save"),
-                onPressed: () {
-                  savePizza();
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }

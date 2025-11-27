@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
-import 'pizza_detail.dart';
-import 'pizza.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'httphelper.dart';
+import 'pizza_detail.dart';
+import 'dart:convert';
+import './pizza.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +19,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Pizza - Sirfara",
+      title: 'Flutter JSON',
+      theme: ThemeData(primarySwatch: Colors.pink),
       home: const MyHomePage(),
     );
   }
@@ -27,65 +34,196 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String pizzaString = '';
+  List<Pizza> myPizzas = [];
+  int appCounter = 0;
+
+  String documentsPath = '';
+  String tempPath = '';
+
+  late File myFile;
+  String fileText = '';
+
+  final pwdController = TextEditingController();
+  String myPass = '';
+
+  final storage = const FlutterSecureStorage();
+  final myKey = 'myPass';
+
   Future<List<Pizza>> callPizzas() async {
     HttpHelper helper = HttpHelper();
-    return await helper.getPizzaList();
+    List<Pizza> pizzas = await helper.getPizzaList();
+    return pizzas;
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Pizza List")),
-      body: FutureBuilder(
-        future: callPizzas(),
-        builder: (context, AsyncSnapshot<List<Pizza>> snapshot) {
-          if (snapshot.hasError) {
-            return const Text("Error fetching data");
-          }
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          final pizzas = snapshot.data!;
-
-          return ListView.builder(
-            itemCount: pizzas.length,
-            itemBuilder: (context, position) {
-              final p = pizzas[position];
-              return ListTile(
-                title: Text(p.pizzaName ?? ""),
-                subtitle: Text("${p.description} - € ${p.price}"),
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(title: const Text('JSON - Fara')),
+    body: FutureBuilder(
+      future: callPizzas(),
+      builder: (BuildContext context, AsyncSnapshot<List<Pizza>> pizzas) {
+        if (pizzas.hasError) {
+          return const Text('Something went wrong');
+        }
+        if (!pizzas.hasData) {
+          return const CircularProgressIndicator();
+        }
+        return ListView.builder(
+          itemCount: (pizzas.data == null) ? 0 : pizzas.data!.length,
+          itemBuilder: (BuildContext context, int position) {
+            return Dismissible(
+              key: Key(position.toString()),
+              onDismissed: (direction) {
+                HttpHelper helper = HttpHelper();
+                pizzas.data!.removeWhere(
+                  (element) => element.id == pizzas.data![position].id,
+                );
+                helper.deletePizza(pizzas.data![position].id!);
+              },
+              child: ListTile(
+                title: Text(pizzas.data![position].pizzaName),
+                subtitle: Text(
+                  pizzas.data![position].description +
+                      ' - € ' +
+                      pizzas.data![position].price.toString(),
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => PizzaDetailScreen(
-                        pizza: p,
+                        pizza: pizzas.data![position],
                         isNew: false,
                       ),
                     ),
                   );
                 },
-              );
-            },
-          );
-        },
-      ),
-
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PizzaDetailScreen(
-                pizza: Pizza(),
-                isNew: true,
               ),
+            );
+          },
+        );
+      },
+    ),
+    floatingActionButton: FloatingActionButton(
+      child: Icon(Icons.add),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PizzaDetailScreen(
+              pizza: Pizza.fromJson({
+                'id': 0,
+                'pizzaName': '',
+                'description': '',
+                'price': 0,
+                'imageUrl': '',
+              }),
+              isNew: true,
             ),
-          );
-        },
-      ),
-    );
+          ),
+        );
+      },
+    ),
+  );
+}
+  Future<List<Pizza>> readJsonFile() async {
+    String myString = await DefaultAssetBundle.of(
+      context,
+    ).loadString('assets/pizzalist.json');
+    List pizzaMapList = jsonDecode(myString);
+    List<Pizza> pizzas = [];
+    for (var pizza in pizzaMapList) {
+      Pizza myPizza = Pizza.fromJson(pizza);
+      pizzas.add(myPizza);
+    }
+
+    String json = convertToJSON(pizzas);
+    print(json);
+    return pizzas;
+  }
+
+  Future readAndWritePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    appCounter = prefs.getInt('appCounter') ?? 0;
+    appCounter++;
+
+    await prefs.setInt('appCounter', appCounter);
+
+    setState(() {
+      appCounter = appCounter;
+    });
+  }
+
+  Future deletePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    setState(() {
+      appCounter = 0;
+    });
+  }
+
+  Future getPaths() async {
+    final docDir = await getApplicationDocumentsDirectory();
+    final tempDir = await getTemporaryDirectory();
+    setState(() {
+      documentsPath = docDir.path;
+      tempPath = tempDir.path;
+    });
+    return docDir;
+  }
+
+  Future<bool> writeFile() async {
+    try {
+      await myFile.writeAsString('Sirfaratih, 2341720072');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> readFile() async {
+    try {
+      String fileContent = await myFile.readAsString();
+      setState(() {
+        fileText = fileContent;
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future writeToSecureStorage() async {
+    await storage.write(key: myKey, value: pwdController.text);
+  }
+
+  Future<String> readFromSecureStorage() async {
+    String secret = await storage.read(key: myKey) ?? '';
+    return secret;
+  }
+
+  String convertToJSON(List<Pizza> pizzas) {
+    return jsonEncode(pizzas.map((pizza) => jsonEncode(pizza)).toList());
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initFile();
+  }
+
+  Future<void> initFile() async {
+    final docDir = await getApplicationDocumentsDirectory();
+    final tempDir = await getTemporaryDirectory();
+
+    setState(() {
+      documentsPath = docDir.path;
+      tempPath = tempDir.path;
+    });
+
+    myFile = File('${docDir.path}/pizzas.txt');
+    await writeFile();
   }
 }

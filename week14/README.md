@@ -384,4 +384,46 @@ floatingActionButton: FloatingActionButton(
 ### Soal 3
 - Ubah salah satu data dengan Nama dan NIM Anda, lalu perhatikan hasilnya di Wiremock.
 - Capture hasil aplikasi Anda berupa GIF di README dan lakukan commit hasil jawaban Soal 3 dengan pesan "W14: Jawaban Soal 3" <br> 
-![3soal](img/soal3.png)
+![3soal](img/piizaadd.png)
+
+
+## Praktikum 4: Menghapus Data dari Web Service (DELETE)
+
+Untuk melakukan aksi DELETE pada layanan web, ikuti langkah-langkah berikut:
+
+1. Masuk ke layanan Wiremock dihttps://app.wiremock.cloud dan klik pada bagian Stubs dari API contoh. Kemudian, buat stub baru.
+2. Lengkapi permintaan
+
+3. Simpan stub baru.
+![prak4](img/prak4.png)
+4. Di proyek Flutter, tambahkan metode deletePizza ke kelas HttpHelper di file http_helper.dart:
+```dart
+Future<String> deletePizza(int id) async {
+  const deletePath = '/pizza';
+  Uri url = Uri.https(authority, deletePath);
+  http.Response r = await http.delete(
+    url,
+  );
+  return r.body;
+}
+```
+
+5. Di file main.dart, di metode build dari kelas _MyHomePageState, refactor itemBuilder dari ListView.builder sehingga ListTile terkandung dalam widget Dismissible, sebagai berikut:
+```dart
+return ListView.builder(
+    itemCount: (pizzas.data == null) ? 0 : pizzas.data.length,
+    itemBuilder: (BuildContext context, int position) {
+        return Dismissible(
+                    key: Key(position.toString()),
+                    onDismissed: (item) {
+                      HttpHelper helper = HttpHelper();
+                      pizzas.data!.removeWhere(
+                          (element) => element.id == pizzas.data![position].id);
+                      helper.deletePizza(pizzas.data![position].id!);
+                    },
+                    child: ListTile(...
+```
+6. Jalankan aplikasi. Ketika Anda swipe elemen apa pun dari daftar pizza, ListTile akan menghilang.
+### Soal 4
+- Capture hasil aplikasi Anda berupa GIF di README dan lakukan commit hasil jawaban Soal 4 dengan pesan "W14: Jawaban Soal 4" <br> 
+![soal4](img/image.png)
