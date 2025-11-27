@@ -1,8 +1,7 @@
-// main.dart
-
 import 'package:flutter/material.dart';
 import 'httphelper.dart';
 import 'pizza.dart';
+import 'pizza_detail.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,12 +15,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Pizza App - Fara", 
       theme: ThemeData(
-        primarySwatch: Colors.red,
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.red,
         ).copyWith(
           primary: const Color.fromARGB(255, 128, 0, 0),
-          secondary: Colors.amber, 
+          secondary: Colors.amber,
         ),
         useMaterial3: true,
       ),
@@ -38,7 +36,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   Future<List<Pizza>> callPizzas() async {
     HttpHelper helper = HttpHelper();
     List<Pizza> pizzas = await helper.getPizzaList();
@@ -53,30 +50,43 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
       ),
+
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const PizzaDetailScreen(),
+            ),
+          );
+        },
+      ),
+
       body: FutureBuilder(
         future: callPizzas(),
         builder: (BuildContext context, AsyncSnapshot<List<Pizza>> snapshot) {
-
           if (snapshot.hasError) {
             print('Error: ${snapshot.error}');
-            return Center(child: Text('Something went wrong: ${snapshot.error.toString()}'));
+            return Center(
+              child: Text('Something went wrong: ${snapshot.error.toString()}'),
+            );
           }
-
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
 
           if (snapshot.data == null || snapshot.data!.isEmpty) {
-             return const Center(child: Text('No pizza data found.'));
+            return const Center(child: Text('No pizza data found.'));
           }
 
           return ListView.builder(
             itemCount: snapshot.data!.length,
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
-                title: Text(snapshot.data![index].pizzaName),
+                title: Text(snapshot.data![index].pizzaName ?? 'No Name'),
                 subtitle: Text(
-                  "${snapshot.data![index].description} - € ${snapshot.data![index].price}",
+                  "${snapshot.data![index].description ?? 'No Description'} - € ${snapshot.data![index].price ?? 0}",
                 ),
               );
             },
