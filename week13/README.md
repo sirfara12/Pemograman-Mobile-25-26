@@ -825,7 +825,7 @@ ElevatedButton(
 Jalankan aplikasi. Masukkan teks, simpan, lalu baca kembali. Teks tersebut seharusnya ditampilkan, menandakan data telah disimpan dan diambil dengan aman.
 
 #### Soal 9
-1. Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+1. Capture hasil praktikum Anda berupa GIF dan lampirkan di README.<br>
 ![soal8](img/image.png)
 
 2. Lalu lakukan commit dengan pesan "W13: Jawaban Soal 9".
