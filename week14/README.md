@@ -95,9 +95,8 @@ description +
 #### Soal 1
 1. Tambahkan nama panggilan Anda pada title app sebagai identitas hasil pekerjaan Anda.
 2. Gantilah warna tema aplikasi sesuai kesukaan Anda.
-3. Capture hasil aplikasi Anda, lalu masukkan ke laporan di README dan lakukan commit hasil jawaban Soal 1 dengan pesan "W14: Jawaban Soal 1"
-<br> 
-![3](img/3.png)
+3. Capture hasil aplikasi Anda, lalu masukkan ke laporan di README dan lakukan commit hasil jawaban Soal 1 dengan pesan "W14: Jawaban Soal 1"<br> 
+![soal1](img/soal1.png)
 
 Di file httphelper.dart, tambahkan kode berikut ke kelas HttpHelper, tepat di bawah deklarasi:
 ```dart
@@ -290,6 +289,99 @@ floatingActionButton: FloatingActionButton(
 Soal 2
 1. Tambahkan field baru dalam JSON maupun POST ke Wiremock!
 2. Capture hasil aplikasi Anda berupa GIF di README dan lakukan commit hasil jawaban Soal 2 dengan pesan "W14: Jawaban Soal 2" <br>
-![5](img/5.mp4)
+![soal2](img/soal2.gif)
 
 
+## Praktikum 3: Memperbarui Data di Web Service (PUT)
+
+1. Masuk ke layanan Wiremock dihttps://app.wiremock.cloud dan klik pada bagian Stubs dari API contoh. Kemudian, buat stub baru.
+2. Lengkapi permintaan
+3. Klik tombol Save.<br>
+ ![6](img/6.png)
+4. Di proyek Flutter, tambahkan metode putPizza ke kelas HttpHelper di file http_helper.dart:
+```dart
+`Future<String> putPizza(Pizza pizza) async {
+  const putPath = '/pizza';
+  String put = json.encode(pizza.toJson());
+  Uri url = Uri.https(authority, putPath);
+  http.Response r = await http.put(
+    url,
+    body: put,
+  );
+  return r.body;
+}
+```
+5. Di kelas PizzaDetailScreen di file pizza_detail.dart, tambahkan dua properti, sebuah Pizza dan sebuah boolean, dan di konstruktor, atur kedua properti tersebut:
+```dart
+final Pizza pizza;
+final bool isNew;
+const PizzaDetailScreen(
+    {super.key, required this.pizza, required this.isNew});
+```
+
+6. Di kelas PizzaDetailScreenState, override metode initState. Ketika properti isNew dari kelas PizzaDetail bukan baru, itu mengatur konten TextField dengan nilai-nilai objek Pizza yang diteruskan:
+```dart
+@override
+void initState() {
+  if (!widget.isNew) {
+    txtId.text = widget.pizza.id.toString();
+    txtName.text = widget.pizza.pizzaName;
+    txtDescription.text = widget.pizza.description;
+    txtPrice.text = widget.pizza.price.toString();
+    txtImageUrl.text = widget.pizza.imageUrl;
+  }
+  super.initState();
+}
+```
+
+7. Edit metode savePizza sehingga memanggil metode helper.postPizza ketika isNew benar, dan helper.putPizza ketika salah:
+```dart
+Future savePizza() async {
+...
+    final result = await (widget.isNew
+  ? helper.postPizza(pizza)
+  : helper.putPizza(pizza));    
+  setState(() {
+      operationResult = result;
+    });
+  }
+```
+
+8. Di file main.dart, di metode build dari _MyHomePageState, tambahkan properti onTap ke ListTile sehingga ketika pengguna mengetuknya, aplikasi akan mengubah rute dan menampilkan layar PizzaDetail, meneruskan pizza saat ini dan false untuk parameter isNew:
+```dart
+return ListTile(
+    title: Text(pizzas.data![position].pizzaName),
+    subtitle: Text(pizzas.data![position].description +
+                  ' - € ' +
+                  pizzas.data![position].price.toString()),
+    onTap: () {
+       Navigator.push(
+          context,
+          MaterialPageRoute(
+             builder: (context) => PizzaDetailScreen(
+                pizza: pizzas.data![position], isNew: false)),
+    );
+```
+9. Di floatingActionButton, teruskan Pizza baru dan true untuk parameter isNew ke rute PizzaDetail:
+```dart
+floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PizzaDetailScreen(
+                        pizza: Pizza(),
+                        isNew: true,
+                      )),            
+           );
+      }),
+);
+```
+
+10. Jalankan aplikasi. Di layar utama, ketuk Pizza apa pun untuk navigasi ke rute PizzaDetail.
+11. Edit detail pizza di field teks dan tekan tombol Save. Anda seharusnya melihat pesan yang menunjukkan bahwa detail pizza telah diperbarui.
+### Soal 3
+- Ubah salah satu data dengan Nama dan NIM Anda, lalu perhatikan hasilnya di Wiremock.
+- Capture hasil aplikasi Anda berupa GIF di README dan lakukan commit hasil jawaban Soal 3 dengan pesan "W14: Jawaban Soal 3" <br> 
+![3soal](img/soal3.png)

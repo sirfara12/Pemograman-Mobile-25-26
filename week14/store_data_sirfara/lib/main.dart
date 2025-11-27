@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'httphelper.dart';
-import 'pizza.dart';
 import 'pizza_detail.dart';
+import 'pizza.dart';
+import 'httphelper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,16 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Pizza App - Fara", 
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.red,
-        ).copyWith(
-          primary: const Color.fromARGB(255, 128, 0, 0),
-          secondary: Colors.amber,
-        ),
-        useMaterial3: true,
-      ),
+      title: "Pizza - Sirfara",
       home: const MyHomePage(),
     );
   }
@@ -32,23 +23,53 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   Future<List<Pizza>> callPizzas() async {
     HttpHelper helper = HttpHelper();
-    List<Pizza> pizzas = await helper.getPizzaList();
-    return pizzas;
+    return await helper.getPizzaList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('JSON - Fara'),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
+      appBar: AppBar(title: const Text("Pizza List")),
+      body: FutureBuilder(
+        future: callPizzas(),
+        builder: (context, AsyncSnapshot<List<Pizza>> snapshot) {
+          if (snapshot.hasError) {
+            return const Text("Error fetching data");
+          }
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          final pizzas = snapshot.data!;
+
+          return ListView.builder(
+            itemCount: pizzas.length,
+            itemBuilder: (context, position) {
+              final p = pizzas[position];
+              return ListTile(
+                title: Text(p.pizzaName ?? ""),
+                subtitle: Text("${p.description} - € ${p.price}"),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PizzaDetailScreen(
+                        pizza: p,
+                        isNew: false,
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          );
+        },
       ),
 
       floatingActionButton: FloatingActionButton(
@@ -57,39 +78,11 @@ class _MyHomePageState extends State<MyHomePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const PizzaDetailScreen(),
+              builder: (context) => PizzaDetailScreen(
+                pizza: Pizza(),
+                isNew: true,
+              ),
             ),
-          );
-        },
-      ),
-
-      body: FutureBuilder(
-        future: callPizzas(),
-        builder: (BuildContext context, AsyncSnapshot<List<Pizza>> snapshot) {
-          if (snapshot.hasError) {
-            print('Error: ${snapshot.error}');
-            return Center(
-              child: Text('Something went wrong: ${snapshot.error.toString()}'),
-            );
-          }
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (snapshot.data == null || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No pizza data found.'));
-          }
-
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                title: Text(snapshot.data![index].pizzaName ?? 'No Name'),
-                subtitle: Text(
-                  "${snapshot.data![index].description ?? 'No Description'} - € ${snapshot.data![index].price ?? 0}",
-                ),
-              );
-            },
           );
         },
       ),

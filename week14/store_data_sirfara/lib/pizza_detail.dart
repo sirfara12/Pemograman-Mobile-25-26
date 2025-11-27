@@ -3,7 +3,14 @@ import 'pizza.dart';
 import 'httphelper.dart';
 
 class PizzaDetailScreen extends StatefulWidget {
-  const PizzaDetailScreen({super.key});
+  final Pizza pizza;
+  final bool isNew;
+
+  const PizzaDetailScreen({
+    super.key,
+    required this.pizza,
+    required this.isNew,
+  });
 
   @override
   State<PizzaDetailScreen> createState() => _PizzaDetailScreenState();
@@ -15,10 +22,20 @@ class _PizzaDetailScreenState extends State<PizzaDetailScreen> {
   final TextEditingController txtDescription = TextEditingController();
   final TextEditingController txtPrice = TextEditingController();
   final TextEditingController txtImageUrl = TextEditingController();
-  
-  final TextEditingController txtSize = TextEditingController(); 
 
   String operationResult = '';
+
+  @override
+  void initState() {
+    if (!widget.isNew) {
+      txtId.text = widget.pizza.id.toString();
+      txtName.text = widget.pizza.pizzaName ?? "";
+      txtDescription.text = widget.pizza.description ?? "";
+      txtPrice.text = widget.pizza.price.toString();
+      txtImageUrl.text = widget.pizza.imageUrl ?? "";
+    }
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -27,11 +44,10 @@ class _PizzaDetailScreenState extends State<PizzaDetailScreen> {
     txtDescription.dispose();
     txtPrice.dispose();
     txtImageUrl.dispose();
-    txtSize.dispose();
     super.dispose();
   }
 
-  Future postPizza() async {
+  Future savePizza() async {
     HttpHelper helper = HttpHelper();
     Pizza pizza = Pizza();
 
@@ -41,9 +57,9 @@ class _PizzaDetailScreenState extends State<PizzaDetailScreen> {
     pizza.price = double.tryParse(txtPrice.text);
     pizza.imageUrl = txtImageUrl.text;
 
-    pizza.size = int.tryParse(txtSize.text); 
-
-    String result = await helper.postPizza(pizza);
+    final result = await (widget.isNew
+        ? helper.postPizza(pizza)
+        : helper.putPizza(pizza));
 
     setState(() {
       operationResult = result;
@@ -53,9 +69,7 @@ class _PizzaDetailScreenState extends State<PizzaDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pizza Detail'),
-      ),
+      appBar: AppBar(title: const Text('Pizza Detail')),
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: SingleChildScrollView(
@@ -68,51 +82,45 @@ class _PizzaDetailScreenState extends State<PizzaDetailScreen> {
                   color: Colors.black,
                 ),
               ),
-
               const SizedBox(height: 24),
+
               TextField(
                 controller: txtId,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(hintText: 'Insert ID (Number)'),
+                decoration: const InputDecoration(hintText: 'Insert ID'),
               ),
-
               const SizedBox(height: 24),
+
               TextField(
                 controller: txtName,
-                decoration: const InputDecoration(hintText: 'Insert Pizza Name'),
+                decoration:
+                    const InputDecoration(hintText: 'Insert Pizza Name'),
               ),
-
               const SizedBox(height: 24),
+
               TextField(
                 controller: txtDescription,
-                decoration: const InputDecoration(hintText: 'Insert Description'),
+                decoration:
+                    const InputDecoration(hintText: 'Insert Description'),
               ),
-
               const SizedBox(height: 24),
+
               TextField(
                 controller: txtPrice,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(hintText: 'Insert Price (Decimal)'),
+                decoration: const InputDecoration(hintText: 'Insert Price'),
               ),
-
               const SizedBox(height: 24),
+
               TextField(
                 controller: txtImageUrl,
-                decoration: const InputDecoration(hintText: 'Insert Image Url'),
+                decoration:
+                    const InputDecoration(hintText: 'Insert Image Url'),
               ),
-
-              const SizedBox(height: 24),
-              TextField(
-                controller: txtSize,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(hintText: 'Insert Size (e.g., 10, 12)'),
-              ),
-
               const SizedBox(height: 48),
+
               ElevatedButton(
-                child: const Text('Send Post'),
+                child: const Text("Save"),
                 onPressed: () {
-                  postPizza();
+                  savePizza();
                 },
               ),
             ],
